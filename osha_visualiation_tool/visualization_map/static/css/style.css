@@ -1,0 +1,42 @@
+/*
+ #map-container {
+    height: 100%;
+}
+#mapid {
+    height: 40%;
+}*/
+#mapid { 
+    height: 800px;
+    width: 1200px;
+/*    height: 100%;
+    width: 100%;*/
+    /*DO NOT CHANGE POSITION!!!!*/
+    position: absolute;
+
+    left: 0px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 1px solid #777;
+    box-shadow: 2px 3px 3px 0px rgba(196,192,196,1);
+    
+}
+
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 300px;
+    max-width: 300px;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+.active{
+    margin: 0 40px 0 20px;
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	
+<meta charset="utf-8">
+
+            <title>Lincoln Park Tourist App </title>
+          
+            
+            {% load static %} 
+            <!-- custom css -->
+            <link rel="stylesheet" href="{% static "css/style.css" %}" />
+            <!-- LEAFLET CSS -->
+            <link rel="stylesheet" href="{% static "leaflet/leaflet.css" %}"/>
+            <!-- LEAFLET JS -->
+            <!-- <script src= "{% static "leaflet/leaflet.js" %}"></script> -->
+            
+            <link rel="stylesheet"  href="{% static "lib/leaflet-search-master/src/leaflet-search.css" %}">
+            
+            <!-- bootstrap -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+            <!-- Our Custom CSS -->
+            <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+            <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" /> -->
+
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+
+    
+    </head>
+    
+    <body>
+<!-- Header (Navigation Bar) -->
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#"></a>
+</nav>
+
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Lincoln Park App</h3>
+        </div>
+        
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#find-user-location" data-toggle="tab">What's Near? </a></li>
+          <br></br>
+          <li><a href="#instagram-rip" data-toggle="tab">LinkNgram</a></li>
+        </ul>
+
+        <div class="tab-content ">
+          <!-- Panel for Find Location -->
+          <div class="tab-pane active" id="find-user-location">
+            <form id = "find-user-location-form">
+              <br></br>
+
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn primary active" id="top-button">
+                  <p id = "locate">Find my location</p>
+                </label>
+              </div>
+
+              <br></br>
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <div id="loader"></div>
+                  <p id = "find-nearest">Near Me</p>
+                </label>
+              </div>
+              <br></br>
+            </form>
+          </div><!-- end of class tab-pane -->
+
+          <!-- Start of Instagram Copy-cat -->
+          <div class="tab-pane" id="instagram-rip">
+            
+            <form id ="instagram-rip-form" method="POST">
+              {% csrf_token %}
+              <br></br>
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <div id="locater"></div>
+                  
+                  <p id = "LincolnParkLocation">Get Location for Submission</p>
+                </label>
+              </div>
+              <div>
+                <label>Photo ID:&nbsp</label>
+                <input type="number placeholder="Unique Name" id="ids" name="ids">
+              </div>              
+              <div>
+                <label>Caption:&nbsp</label>
+                <input placeholder="Small Description" id="caption" name="caption">
+              </div>
+              
+              <div>
+                <label>Image:&nbsp</label>
+                <!-- <label for="fileupload"> Select a file to upload</label> -->
+                <input type="file" name="fileupload" value="Select Image" id="fileupload"> 
+                <!-- <input type="text" name="filePath">  -->
+              </div>
+              <div>
+                <div>
+                  <label >Latitude:&nbsp</label>
+                  <input type="number" step="0.000000000000001" name="latitude" id="lats" >
+                </div>
+                
+                <div>
+                  <label>Longitude:&nbsp</label>
+                  <input type="number" step="0.000000000000001" name="longitude" id="longs">
+                </div>
+                <br>
+                <input type="submit">
+              </div>
+              
+            </form>
+<!--             <form method="POST">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <label for="in_name">Enter name: </label>
+              <input id="in_name" type="text" name="in_name">
+              <input type="submit">
+            </form>
+ -->
+          </div>
+        </div> <!-- end of tab-content -->
+    </nav>
+    <!-- Page Content -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+<!-- 
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Toggle Sidebar</span>
+                </button> -->
+                <div id="mapid" > </div>
+            </div>
+        </nav>
+    </div>
+
+</div>       
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<!-- Ajax -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- JQUERY -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+<!-- Leaflet Search -->
+<!-- third party APP -->
+<script type="text/javascript" src="{% static "lib/leaflet-search-master/src/leaflet-search.js" %}"></script>
+<!-- Bootstrap JS -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript" >
+  var response = {{ injurys|injury_data }};
+  console.log(response);
+</script>
+<!-- JS custom script  -->
+<!-- <script type="text/javascript" src="{% static "js/script.js" %}"></script> -->
+
+<!-- <script type="text/javascript">
+
+function initialization() {
+var mymap = L.map('mapid').setView([40.456880, -99.177321], 4); //38.724066, -99.262098 //
+  
+// default OSM map for now
+var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mymap);
+//CARTODB
+
+
+
+
+
+} //end of initialization
+
+
+$(document).ready(initialization);
+</script> -->
+
+    </body>
+</html>
