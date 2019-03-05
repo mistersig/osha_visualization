@@ -1,4 +1,3 @@
-# Create your models here.
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -7,17 +6,116 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.contrib.gis.db import models
-from django.contrib.gis.db import models
-from django.contrib.gis.geos import GEOSGeometry  
-from decimal import Decimal
 
-class NaicsCodesData(models.Model):
-    codes = models.IntegerField(primary_key=True)
-    titles = models.CharField(max_length=300, blank=True, null=True)
+
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=80)
 
     class Meta:
         managed = False
-        db_table = 'naics_codes_data'
+        db_table = 'auth_group'
+
+
+class AuthGroupPermissions(models.Model):
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class AuthUserGroups(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
+
+
+class AuthUserUserPermissions(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
+
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200)
+    action_flag = models.SmallIntegerField()
+    change_message = models.TextField()
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
 
 
 class FatalitiesDataTable(models.Model):
@@ -33,29 +131,13 @@ class FatalitiesDataTable(models.Model):
         db_table = 'fatalities_data_table'
 
 
-##state count levels
-class FatalitiesStatesCount(models.Model):
-    year_s = models.FloatField(blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    state = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
+class NaicsCodesData(models.Model):
+    codes = models.IntegerField(primary_key=True)
+    titles = models.CharField(max_length=300, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'fatalities_states_count'
-
-#Injurry by state and years
-class InjuryStateCount(models.Model):
-    year_s = models.FloatField(blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    state = models.CharField(max_length=32, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'injury_state_count'
+        db_table = 'naics_codes_data'
 
 
 class OshaInspectionData(models.Model):
@@ -118,15 +200,6 @@ class OshaSevereInjuryData(models.Model):
     amputation = models.SmallIntegerField(blank=True, null=True)
     final_description = models.CharField(max_length=3000, blank=True, null=True)
     body_part = models.CharField(max_length=64, blank=True, null=True)
-    # geom = GEOSGeometry('POINT(' + longitude + latitude+')')
-    # geom = GEOSGeometry('POINT(' + longitude + latitude+')')
-
-    # fromstr('POINT(' + my_long_lat + ')')
-    # geom = GEOSGeometry("POINT({0} {1})".format(longitude, latitude))
-    geom = models.PointField("POINT({0} {1})".format(longitude, latitude))
-
-    def __unicode__(self):
-    	return self.injury_index
 
     class Meta:
         managed = False
@@ -183,4 +256,3 @@ class ZipcodesSpatialData(models.Model):
     class Meta:
         managed = False
         db_table = 'zipcodes_spatial_data'
-

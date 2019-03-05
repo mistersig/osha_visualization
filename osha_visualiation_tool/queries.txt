@@ -1,0 +1,172 @@
+python3 manage.py inspectdb > models2.py
+
+
+##inspection data with zipcodes geom
+select 
+EXTRACT(YEAR FROM osha_inspection_data.open_date) as year_s,
+activity_nr,
+site_state,
+site_zip, 
+sic_codes_data.description,
+naics_codes_data.titles,
+insp_type,
+insp_scope,
+nr_in_estab,
+zipcodes_spatial_data.geom
+from osha_inspection_data,sic_codes_data,naics_codes_data,zipcodes_spatial_data
+WHERE sic_codes_data.code = osha_inspection_data.sic_code
+AND naics_codes_data.codes = osha_inspection_data.naics_code
+AND zipcodes_spatial_data.geoid10 = cast(osha_inspection_data.site_zip as varchar)
+
+
+
+-- states shapefile states = stusps
+select * from us_states_spatial_data
+
+-- zipcodes = geoid10
+select * from zipcodes_spatial_data
+
+GEOM with fatalities 
+
+
+##ADDING GEOM TO FATALITIES 
+#will need a primary key 
+select 
+distinct EXTRACT(YEAR FROM fatalities_data_table.incident_date) as year_s,
+count(fatalities_data_table.state),
+fatalities_data_table.state,
+us_states_spatial_data.geom
+from 
+us_states_spatial_data,fatalities_data_table
+where fatalities_data_table.state = us_states_spatial_data.stusps
+group by
+year_s,
+fatalities_data_table.state,
+us_states_spatial_data.geom
+order by count
+
+
+
+
+zipcodes_spatial_data
+
+
+
+##Inspection query
+##Need to add Geom 
+## not sure if adding ZIP or STATE
+
+select activity_nr,
+site_state,
+site_zip, 
+sic_codes_data.description,
+naics_codes_data.titles,
+insp_type,
+insp_scope,
+nr_in_estab,
+open_date,
+close_case_date
+from osha_inspection_data,sic_codes_data,naics_codes_data
+WHERE sic_codes_data.code = osha_inspection_data.sic_code
+AND naics_codes_data.codes = osha_inspection_data.naics_code
+
+
+
+## injuries lat/long only
+##
+select 
+injury_index, 
+event_date, 
+employer, 
+zipcode, 
+latitude,
+longitude,
+naics_codes_data.titles,
+body_part
+from osha_severe_injury_data,naics_codes_data
+WHERE osha_severe_injury_data.naics_code = naics_codes_data.codes 
+
+
+
+
+
+
+##osha_severe_injury_data
+##count of injury
+
+select 
+Distinct EXTRACT(YEAR FROM osha_severe_injury_data.event_date) as year_s,
+count(osha_severe_injury_data.state), 
+osha_severe_injury_data.state,
+us_states_spatial_data.geom
+from osha_severe_injury_data, us_states_spatial_data
+WHERE lower(us_states_spatial_data.name) = lower(osha_severe_injury_data.state)
+group by 
+year_s,
+osha_severe_injury_data.state, 
+us_states_spatial_data.geom,
+osha_severe_injury_data.event_date
+order by count DESC
+
+
+
+
+CREATE TABLE films_recent AS
+SELECT * FROM films WHERE date_prod >= '2002-01-01';
+
+ALTER TABLE body_part_counts ADD COLUMN id SERIAL PRIMARY KEY;
+
+
+  ALTER TABLE old_table ADD pk_column INT AUTO_INCREMENT PRIMARY KEY;
+
+
+
+
+
+
+
+
+
+
+select 
+EXTRACT(YEAR FROM osha_inspection_data.open_date) as year_s,
+activity_nr,
+site_state,
+site_zip, 
+sic_codes_data.description,
+naics_codes_data.titles,
+insp_type,
+insp_scope,
+nr_in_estab,
+zipcodes_spatial_data.geom
+from osha_inspection_data,sic_codes_data,naics_codes_data,zipcodes_spatial_data
+WHERE sic_codes_data.code = osha_inspection_data.sic_code
+AND naics_codes_data.codes = osha_inspection_data.naics_code
+AND zipcodes_spatial_data.geoid10 = cast(osha_inspection_data.site_zip as varchar)
+
+
+
+
+
+
+
+
+
+alter table your_table add column geom geometry(Point, 4326);
+
+Then use st_SetSrid and st_MakePoint to populate the column:
+
+update your_table set geom=st_SetSrid(st_MakePoint(longitude, latitude), 4326);
+
+
+
+
+
+
+
+
+
+
+
+
+

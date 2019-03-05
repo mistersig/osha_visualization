@@ -41,13 +41,13 @@
     <!-- Sidebar -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Lincoln Park App</h3>
+            <h3>OSHA Inspection Application</h3>
         </div>
         
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#find-user-location" data-toggle="tab">What's Near? </a></li>
+          <li class="active"><a href="#find-user-location" data-toggle="tab">Inspect</a></li>
           <br></br>
-          <li><a href="#instagram-rip" data-toggle="tab">LinkNgram</a></li>
+          <li><a href="#instagram-rip" data-toggle="tab">Run Script</a></li>
         </ul>
 
         <div class="tab-content ">
@@ -157,13 +157,18 @@
 <!-- Bootstrap JS -->
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-
+<!-- pass Model data here first  -->
 <script type="text/javascript" >
-  var response = {{ injurys|injury_data }};
-  console.log(response);
+  var response = {{ injurys|safe }};
+  var response1 = {{ fatalities_states|safe }};
+  var response2 = {{injuries_states|safe }};
+
+  
 </script>
 <!-- JS custom script  -->
-<!-- <script type="text/javascript" src="{% static "js/script.js" %}"></script> -->
+<script type="text/javascript" src="{% static "js/script.js" %}">
+  // var response = {{ injurys|safe }};
+</script>
 
 <!-- <script type="text/javascript">
 
