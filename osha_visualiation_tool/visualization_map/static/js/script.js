@@ -56,10 +56,10 @@ return layer
 // console.log(layer)
 
 // loading GeoJSON file - Here my html and usa_adm.geojson file resides in same folder
-$.getJSON("usa_adm.geojson",function(data){
-// L.geoJson function is used to parse geojson file and load on to map
-L.geoJson(data).addTo(newMap);
-});
+// $.getJSON("usa_adm.geojson",function(data){
+// // L.geoJson function is used to parse geojson file and load on to map
+// L.geoJson(data).addTo(newMap);
+// });
 
 
 
@@ -155,10 +155,56 @@ function createPopup(properties,attribute,layer,radius){
 // })
 
 
-
-
-
 } //end of initialization
+
+//delayed scrolling between page sections
+function smoothScroll(){
+  // Add smooth scrolling to all links
+  $(".js-scroll").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 700, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    }
+  });
+}; // end of smoothScroll
+
+function scrollify(){
+    $.scrollify({
+        section : "#home,#maparea,#dataarea,#aboutarea",
+        easing: "easeOutExpo",
+        scrollSpeed: 700,
+        offset : 0,
+        scrollbars: true,
+        standardScrollElements: "",
+        setHeights: true,
+        overflowScroll: true,
+        updateHash: false,
+        touchScroll:true,
+        before:function() {},
+        after:function() {},
+        afterResize:function() {},
+        afterRender:function() {}
+    });
+};
+
+
 
 
 $(document).ready(initialization);
+$(document).ready(smoothScroll);
+$(document).ready(scrollify);

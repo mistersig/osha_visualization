@@ -5,7 +5,7 @@
 	
 <meta charset="utf-8">
 
-            <title>Lincoln Park Tourist App </title>
+            <title>Osha Inspection App </title>
           
             
             {% load static %} 
@@ -30,118 +30,86 @@
     </head>
     
     <body>
-<!-- Header (Navigation Bar) -->
-<nav class="navbar navbar-default">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#"></a>
-</nav>
+           <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+              </button>
+              <a class="navbar-brand js-scroll" href="#home">
+                <!-- <img id="cg-flag" src="img/mini_flag.png" alt="Home"> -->
+              </a>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#maparea" class="js-scroll">Map</a></li>
+                <li><a href="#dataarea" class="js-scroll">Chart</a></li>
+                <li><a href="#aboutarea" class="js-scroll">About</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav> 
 
-<div class="wrapper">
+        <!--HOME/SPLASH-->
 
-    <!-- Sidebar -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <h3>OSHA Inspection Application</h3>
+        <div class="jumbotron jumbotron-fluid" id="home">
+            <div class="container-fluid">
+                <br>
+                <h1 class="shadow">OSHA Data Visualization &amp; Inspection Application</h1>
+                <h3 class="shadow">An application to survey data</h3>
+                <h4 class="shadow">Measuring stuff</h4>
+            </div>
         </div>
         
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#find-user-location" data-toggle="tab">Inspect</a></li>
-          <br></br>
-          <li><a href="#instagram-rip" data-toggle="tab">Run Script</a></li>
-        </ul>
-
-        <div class="tab-content ">
-          <!-- Panel for Find Location -->
-          <div class="tab-pane active" id="find-user-location">
-            <form id = "find-user-location-form">
-              <br></br>
-
-              <div class="btn-group-toggle" data-toggle="buttons">
-                <label class="btn primary active" id="top-button">
-                  <p id = "locate">Find my location</p>
-                </label>
-              </div>
-
-              <br></br>
-              <div class="btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary active">
-                  <div id="loader"></div>
-                  <p id = "find-nearest">Near Me</p>
-                </label>
-              </div>
-              <br></br>
-            </form>
-          </div><!-- end of class tab-pane -->
-
-          <!-- Start of Instagram Copy-cat -->
-          <div class="tab-pane" id="instagram-rip">
-            
-            <form id ="instagram-rip-form" method="POST">
-              {% csrf_token %}
-              <br></br>
-              <div class="btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary active">
-                  <div id="locater"></div>
-                  
-                  <p id = "LincolnParkLocation">Get Location for Submission</p>
-                </label>
-              </div>
-              <div>
-                <label>Photo ID:&nbsp</label>
-                <input type="number placeholder="Unique Name" id="ids" name="ids">
-              </div>              
-              <div>
-                <label>Caption:&nbsp</label>
-                <input placeholder="Small Description" id="caption" name="caption">
-              </div>
-              
-              <div>
-                <label>Image:&nbsp</label>
-                <!-- <label for="fileupload"> Select a file to upload</label> -->
-                <input type="file" name="fileupload" value="Select Image" id="fileupload"> 
-                <!-- <input type="text" name="filePath">  -->
-              </div>
-              <div>
-                <div>
-                  <label >Latitude:&nbsp</label>
-                  <input type="number" step="0.000000000000001" name="latitude" id="lats" >
-                </div>
-                
-                <div>
-                  <label>Longitude:&nbsp</label>
-                  <input type="number" step="0.000000000000001" name="longitude" id="longs">
-                </div>
-                <br>
-                <input type="submit">
-              </div>
-              
-            </form>
-<!--             <form method="POST">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <label for="in_name">Enter name: </label>
-              <input id="in_name" type="text" name="in_name">
-              <input type="submit">
-            </form>
- -->
-          </div>
-        </div> <!-- end of tab-content -->
-    </nav>
-    <!-- Page Content -->
-    <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!--MAP-->
+        
+    <div id="maparea">
             <div class="container-fluid">
-<!-- 
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
-                    <span>Toggle Sidebar</span>
-                </button> -->
-                <div id="mapid" > </div>
+                <div id='mapid'>
+                    <div id="sidebar">
+                    </div>
+                </div>
             </div>
-        </nav>
-    </div>
+        </div>
+        
+        <!--DATA VIZ-->
+        
+    <div id="dataarea">
+            <!-- if we are going to narrow down the graph -->
+                <!-- <button title="Keep Selected Area" id="keep-data" disabled="disabled">Keep</button> -->
+                <!-- <button title="Remove selected data" id="exclude-data" disabled="disabled">Exclude</button> -->
+            <div class="container-fluid data-container">
+                <div id="data"></div>
+            </div>
+        </div>
+        
+        <!--ABOUT-->
+        
+    <div id="aboutarea">
+            <div class="container-fluid">
+                <div id="about">
+                    <h3>About the data</h3>
+                    <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p>
+                    <p>To calculate our <b>Gentrification Index</b> we averaged the percentile ranks (0-1; 0 being the least or negative growth; 1 being the most growth) of the percentage change of the following fields for each tract in Cook County. Inverse fields (<i>1-x</i>) are distiguished because those of a higher percentile are assumed to <i>not</i> indicate areas of higher gentrification. Thus, taking the inverse of this entire index may result in a <b>Displacement Index</b>.</p>
+                    <ul>
+                        <li><p>Overall population growth</p></li>
+                        <li><p>Per Capita Income</p></li>
+                        <li><p>Some college or higher population</p></li>
+                        <li><p>Rental:Owner housing unit ratio</p></li>
+                        <li><p>Only high school or less population (inverse)</p></li>
+                        <li><p>Homeless population (inverse)</p></li>
+                        <li><p>Unenployment rate (inverse)</p></li>
+                        <li><p>Poverty rate (inverse)</p></li>
+                    </ul>
+                    <h3>About us</h3>
+                    <p>Developed by <a href="http://jmjfisher.com/" target=blank>JohnMark Fisher</a> and <a href="https://mistersig.github.io/" target=blank>Sigfrido Gomez</a> for the University of Wisconsin-Madison's Geography 575 course.</p>
+                </div>
+            </div>
+        </div>
 
-</div>       
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
@@ -151,6 +119,14 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+
+<!-- scrollify -->
+<!-- <script type="text/javascript" src="lib/jquery.scrollify.js"></script> -->
+<script type="text/javascript" src="{% static "lib/jquery.scrollify.js" %}"></script>
+
+
+
+<!-- <script type="text/javascript" src="https://github.com/lukehaas/Scrollify/blob/master/jquery.scrollify.js"></script> -->
 <!-- Leaflet Search -->
 <!-- third party APP -->
 <script type="text/javascript" src="{% static "lib/leaflet-search-master/src/leaflet-search.js" %}"></script>
@@ -161,36 +137,15 @@
 <script type="text/javascript" >
   var response = {{ injurys|safe }};
   var response1 = {{ fatalities_states|safe }};
-  var response2 = {{injuries_states|safe }};
+  // var response2 = {{injuries_states|safe }};
 
   
 </script>
+
+
 <!-- JS custom script  -->
 <script type="text/javascript" src="{% static "js/script.js" %}">
-  // var response = {{ injurys|safe }};
 </script>
-
-<!-- <script type="text/javascript">
-
-function initialization() {
-var mymap = L.map('mapid').setView([40.456880, -99.177321], 4); //38.724066, -99.262098 //
-  
-// default OSM map for now
-var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
-//CARTODB
-
-
-
-
-
-} //end of initialization
-
-
-$(document).ready(initialization);
-</script> -->
 
     </body>
 </html>
