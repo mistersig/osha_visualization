@@ -19,6 +19,8 @@ var baseMaps = {
 
 
 
+var markers = L.markerClusterGroup();
+
 // Layer for Injury
 var layer = L.geoJSON(response, {pointToLayer: function (feature, latlng) {
   var geojsonMarkerOptions = {
@@ -49,7 +51,8 @@ click: function(){
 });
 
 // return layer.addTo(mymap);
-return layer
+// return layer
+return markers.addLayer(layer).addTo(mymap);
 } 
 }) //end of layer1
 
@@ -206,5 +209,108 @@ function scrollify(){
 
 
 $(document).ready(initialization);
-$(document).ready(smoothScroll);
-$(document).ready(scrollify);
+// $(document).ready(smoothScroll);
+// $(document).ready(scrollify);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //ZB Installations throughout US
+// //Alan Ross Machinery 
+// function createMap(){
+// var mymap = L.map('mapid').setView([29.505, -80.09], 4); //35.421263, -97.326722 //ohhh OKLAHOMA!
+
+// // var Stamen_TonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+// //  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+// //  subdomains: 'abcd',
+// //  minZoom: 0,
+// //  maxZoom: 7,
+// //  ext: 'png'
+// // }).addTo(mymap);
+
+// // var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+// //  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+// //  subdomains: 'abcd',
+// //  minZoom: 0,
+// //  maxZoom: 7,
+// //  ext: 'png'
+// // }).addTo(mymap);
+
+
+// var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+//   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
+//     minZoom: 0,
+//   maxZoom: 7,
+// }).addTo(mymap);
+
+
+// getData(mymap)
+// };//end of create map function 
+// function getData(mymap){
+//   // load the data
+//   $.ajax("data/magnaInstall.json",{
+//     dataType:"json",
+//     success: function(response){
+//       //console.log(response)
+//       createVideoPopUps(response,mymap);
+//     } //end of success 
+//   });
+// };//end of getData
+
+// function createVideoPopUps(response,mymap){
+//   // console.log(response);
+//   // var popUpContent = "<p><b>City: <b>" +response.features.properties["City"]+ "</p>";
+//   //console.log(popUpContent);
+//   // cluster for later
+//   var markers = L.markerClusterGroup();
+  
+//   var geojsonMarkerOptions = {
+//     radius: 15,
+//     fillColor: "#fffa0a",
+//     color: "#000cff",
+//     weight: 1,
+//     opacity: 1,
+//     fillOpacity: .8
+//   };
+//   var layer = L.geoJSON(response, {pointToLayer: function (feature, latlng) {
+//     var popUpContent = feature.properties["notes"];
+//     console.log(feature);
+//     popUpContent += feature.properties["mapUrl"];
+//     // popUpContent += feature.properties["sText"];
+//     layer = L.circleMarker(latlng,geojsonMarkerOptions);
+//     layer.bindPopup(popUpContent,{offset: new L.point(0,0), maxWidth: 560, autoPan:true
+//     });
+//         layer.on({
+//     mouseover: function(){
+//         this.openPopup();
+//     },
+//     // mouseout: function(){
+//     //     this.closePopup();
+//     // },
+//     click: function(){
+//         layer.on(popUpContent);
+//     }
+//     });
+//     // return L.circleMarker(latlng, geojsonMarkerOptions).addTo(mymap);
+//     // return layer.addTo(mymap);
+//     return markers.addLayer(layer).addTo(mymap);
+//   }
+//   })
+// };//end createVideoPopUps
+// $(document).ready(createMap);

@@ -121,11 +121,26 @@ ALTER TABLE body_part_counts ADD COLUMN id SERIAL PRIMARY KEY;
 
 
 
+CREATE TABLE fatalities_states_count as 
+select 
+distinct EXTRACT(YEAR FROM osha_fatalities_data.incident_date) as year_s,
+count(osha_fatalities_data.state),
+osha_fatalities_data.state,
+us_states_spatial_data.geom
+from 
+us_states_spatial_data,osha_fatalities_data
+where osha_fatalities_data.state = us_states_spatial_data.stusps
+group by
+year_s,
+osha_fatalities_data.state,
+us_states_spatial_data.geom
+order by count;
+
+ALTER TABLE fatalities_states_count ADD COLUMN fid SERIAL PRIMARY KEY;
 
 
 
-
-
+ALTER TABLE fatalities_states_count FROP COLUMN id ;
 
 
 select 
@@ -153,16 +168,15 @@ AND zipcodes_spatial_data.geoid10 = cast(osha_inspection_data.site_zip as varcha
 
 
 alter table your_table add column geom geometry(Point, 4326);
-
 Then use st_SetSrid and st_MakePoint to populate the column:
-
 update your_table set geom=st_SetSrid(st_MakePoint(longitude, latitude), 4326);
 
 
 
 
+alter table osha_severe_injury_data add column geom geometry(Point, 4326);
 
-
+update osha_severe_injury_data set geom=st_SetSrid(st_MakePoint(longitude, latitude), 4326);
 
 
 

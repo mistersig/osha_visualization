@@ -46,16 +46,16 @@ class FatalitiesStatesCount(models.Model):
         db_table = 'fatalities_states_count'
 
 #Injurry by state and years
-class InjuryStateCount(models.Model):
-    year_s = models.FloatField(blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    state = models.CharField(max_length=32, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
+# class InjuryStateCount(models.Model):
+#     year_s = models.FloatField(blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     state = models.CharField(max_length=32, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
 
-    class Meta:
-        managed = False
-        db_table = 'injury_state_count'
+#     class Meta:
+#         managed = False
+#         db_table = 'injury_state_count'
 
 
 class OshaInspectionData(models.Model):

@@ -2,150 +2,104 @@
 <html lang="en-us">
 
 <head>
-	
-<meta charset="utf-8">
-
-            <title>Osha Inspection App </title>
-          
-            
-            {% load static %} 
-            <!-- custom css -->
-            <link rel="stylesheet" href="{% static "css/style.css" %}" />
-            <!-- LEAFLET CSS -->
-            <link rel="stylesheet" href="{% static "leaflet/leaflet.css" %}"/>
-            <!-- LEAFLET JS -->
-            <!-- <script src= "{% static "leaflet/leaflet.js" %}"></script> -->
-            
-            <link rel="stylesheet"  href="{% static "lib/leaflet-search-master/src/leaflet-search.css" %}">
-            
-            <!-- bootstrap -->
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-            <!-- Our Custom CSS -->
-            <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-            <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" /> -->
-
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-
-    
-    </head>
-    
-    <body>
-           <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span> 
-              </button>
-              <a class="navbar-brand js-scroll" href="#home">
-                <!-- <img id="cg-flag" src="img/mini_flag.png" alt="Home"> -->
-              </a>
-            </div>
-            
-            <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#maparea" class="js-scroll">Map</a></li>
-                <li><a href="#dataarea" class="js-scroll">Chart</a></li>
-                <li><a href="#aboutarea" class="js-scroll">About</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav> 
-
-        <!--HOME/SPLASH-->
-
-        <div class="jumbotron jumbotron-fluid" id="home">
-            <div class="container-fluid">
-                <br>
-                <h1 class="shadow">OSHA Data Visualization &amp; Inspection Application</h1>
-                <h3 class="shadow">An application to survey data</h3>
-                <h4 class="shadow">Measuring stuff</h4>
+    <meta charset="utf-8">
+    <title>Osha Inspection App </title>          
+    {% load static %} 
+    <!-- LEAFLET CSS -->
+    <link rel="stylesheet" href="{% static "lib/leaflet/leaflet.css" %}"/>
+    <link rel="stylesheet"  href="{% static "lib/leaflet-search-master/src/leaflet-search.css" %}">
+    <!--GROUPED <link rel="stylesheet"  href="{% static "lib/leaflet-search-master/src/leaflet-search.css" %}"> -->
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="{% static "lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" %}" />
+    <link rel="stylesheet" href="{% static "lib/bootstrap-4.0.0-dist/css/bootstrap.css" %}" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="{% static "lib/Leaflet_markercluster/dist/MarkerCluster.css" %}" />
+    <link rel="stylesheet" href="{% static "lib/Leaflet_markercluster/dist/MarkerCluster.Default.css" %}" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
+</head>
+<body>
+    <!--BOOTSTRAP NAVBAR-->
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" >
+        <div class="container">
+            <a class="navbar-brand" href="#home"><img id="cg-flag" src="{% static "img/worker.png" %}" alt="Home"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#home">Home<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#maparea">Map</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dataarea">Chart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#aboutarea">About</a></li>
+                </ul>
             </div>
         </div>
-        
-        <!--MAP-->
-        
+    </nav>
+    <!--HOME/SPLASH-->
+    <div class="jumbotron jumbotron-fluid" id="home">
+        <div class="container-fluid">
+            <br>
+            <h1 class="shadow">Chicago Displacement &amp; Gentrification</h1>
+            <h3 class="shadow">An application to convey areas of potential population displacement or gentrification in Chicago from 2010-2016</h3>
+            <h4 class="shadow">Measuring changes in economics, education, housing, and population</h4>
+        </div>
+    </div>
+    <!--MAP-->
     <div id="maparea">
-            <div class="container-fluid">
-                <div id='mapid'>
-                    <div id="sidebar">
-                    </div>
-                </div>
+        <div class="container-fluid">
+            <div id='mapid'>
+                <div id="sidebar"></div>
             </div>
         </div>
-        
-        <!--DATA VIZ-->
-        
+    </div>
+    <!--DATA VIZ-->
     <div id="dataarea">
-            <!-- if we are going to narrow down the graph -->
-                <!-- <button title="Keep Selected Area" id="keep-data" disabled="disabled">Keep</button> -->
-                <!-- <button title="Remove selected data" id="exclude-data" disabled="disabled">Exclude</button> -->
-            <div class="container-fluid data-container">
-                <div id="data"></div>
+        <div class="container-fluid data-container">
+            <div id="data">
+                
             </div>
         </div>
-        
-        <!--ABOUT-->
-        
+    </div>
+    <!--ABOUT-->
     <div id="aboutarea">
-            <div class="container-fluid">
-                <div id="about">
-                    <h3>About the data</h3>
-                    <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p>
-                    <p>To calculate our <b>Gentrification Index</b> we averaged the percentile ranks (0-1; 0 being the least or negative growth; 1 being the most growth) of the percentage change of the following fields for each tract in Cook County. Inverse fields (<i>1-x</i>) are distiguished because those of a higher percentile are assumed to <i>not</i> indicate areas of higher gentrification. Thus, taking the inverse of this entire index may result in a <b>Displacement Index</b>.</p>
-                    <ul>
-                        <li><p>Overall population growth</p></li>
-                        <li><p>Per Capita Income</p></li>
-                        <li><p>Some college or higher population</p></li>
-                        <li><p>Rental:Owner housing unit ratio</p></li>
-                        <li><p>Only high school or less population (inverse)</p></li>
-                        <li><p>Homeless population (inverse)</p></li>
-                        <li><p>Unenployment rate (inverse)</p></li>
-                        <li><p>Poverty rate (inverse)</p></li>
-                    </ul>
-                    <h3>About us</h3>
-                    <p>Developed by <a href="http://jmjfisher.com/" target=blank>JohnMark Fisher</a> and <a href="https://mistersig.github.io/" target=blank>Sigfrido Gomez</a> for the University of Wisconsin-Madison's Geography 575 course.</p>
-                </div>
+        <div class="container-fluid">
+            <div id="about">
+                <h3>About the project</h3>
+<!--                 <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p> -->
+
+                <p>OSHA <b>Gentrification Index</b> OSHA</p>
+  
+                <h3>About The Developer</h3>
+                <p>Developed by <a href="https://mistersig.github.io/" target=blank>Sigfrido Gomez</a> for the University of Wisconsin-Madison's Geography 778 Capstone project.</p>
             </div>
         </div>
+    </div>
+    <!-- Leaflet JS -->
+    <script src= "{% static "lib/leaflet/leaflet.js" %}"></script>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <!-- Ajax -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- Cluster JS -->
+    <script type="text/javascript" src="{% static "lib/Leaflet_markercluster/dist/leaflet.markercluster-src.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/Leaflet_markercluster/dist/leaflet.markercluster.js" %}"></script>
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <!-- scrollify -->
+    <script type="text/javascript" src="{% static "lib/jquery.scrollify.js" %}"></script>
+    <!-- Leaflet Search -->
+    <script type="text/javascript" src="{% static "lib/leaflet-search-master/src/leaflet-search.js" %}"></script>
+    <!-- Bootstrap JS -->
+    <script type="text/javascript" src="{% static "lib/bootstrap-4.0.0-dist/js/bootstrap.min.js" %}"></script>
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+    <!-- pass Model data here first  -->
+    <script type="text/javascript" >
+        var response = {{ injurys|safe }};
+        var response1 = {{ fatalities_states|safe }};
+        // var response2 = {{injuries_states|safe }};
+    </script>
+    <!-- JS custom script  -->
+    <script type="text/javascript" src="{% static "js/script.js" %}"></script>
+</body>
 
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
-
-<!-- Make sure you put this AFTER Leaflet's CSS -->
-<!-- Ajax -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<!-- JQUERY -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-
-<!-- scrollify -->
-<!-- <script type="text/javascript" src="lib/jquery.scrollify.js"></script> -->
-<script type="text/javascript" src="{% static "lib/jquery.scrollify.js" %}"></script>
-
-
-
-<!-- <script type="text/javascript" src="https://github.com/lukehaas/Scrollify/blob/master/jquery.scrollify.js"></script> -->
-<!-- Leaflet Search -->
-<!-- third party APP -->
-<script type="text/javascript" src="{% static "lib/leaflet-search-master/src/leaflet-search.js" %}"></script>
-<!-- Bootstrap JS -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-<!-- pass Model data here first  -->
-<script type="text/javascript" >
-  var response = {{ injurys|safe }};
-  var response1 = {{ fatalities_states|safe }};
-  // var response2 = {{injuries_states|safe }};
-
-  
-</script>
-
-
-<!-- JS custom script  -->
-<script type="text/javascript" src="{% static "js/script.js" %}">
-</script>
-
-    </body>
 </html>

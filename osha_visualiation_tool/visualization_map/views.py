@@ -4,8 +4,8 @@ from django.shortcuts import render
 
 #replace with my models
 # from visualization_map.models import AllLayers,Photos,PublicArt,Restaurants,Sports,Testing,WaterLeisure,Zoo
-from visualization_map.models import OshaSevereInjuryData,FatalitiesStatesCount,InjuryStateCount
-
+# from visualization_map.models import OshaSevereInjuryData,FatalitiesStatesCount,InjuryStateCount
+from visualization_map.models import OshaSevereInjuryData,FatalitiesStatesCount
 from django.core import serializers
 # from django.core import serialize
 from django.http import JsonResponse
@@ -38,8 +38,8 @@ def index(request):
 		fatalities_count = FatalitiesStatesCount.objects.all()
 		f_state_data = serializers.serialize('geojson', fatalities_count, fields=('year_s','count','state','geom','fid'))
 
-		injuries_count = InjuryStateCount.objects.all()
-		i_state_data = serializers.serialize('geojson', injuries_count, fields=('year_s','count','state','geom','fid' ))		
+		# injuries_count = InjuryStateCount.objects.all()
+		# i_state_data = serializers.serialize('geojson', injuries_count, fields=('year_s','count','state','geom','fid' ))		
 
 
 		# all_L = OshaInspectionData.objects.all()
@@ -65,7 +65,8 @@ def index(request):
 		# zoo_data = serializers.serialize('geojson', zoo,fields=('geoid','activity_type','place_name','longitude','latitude','geom'))
 		# form = NameForm()
 		
-		return render(request,'index.html',{'injurys':injury_data,'fatalities_states':f_state_data,'injuries_states':i_state_data})
+		# return render(request,'index.html',{'injurys':injury_data,'fatalities_states':f_state_data,'injuries_states':i_state_data})
+		return render(request,'index.html',{'injurys':injury_data,'fatalities_states':f_state_data})
 		
 
 

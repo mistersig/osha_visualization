@@ -1,43 +1,23 @@
-/*
- #map-container {
-    height: 100%;
+/*NAVAGATION BAR*/
+.navbar-default {
+    font-family: Futura, Trebuchet MS, Arial, sans-serif;
+    font-size: 20px;
+    color: #4D4D4D;
+    background-color: #133762;
+    border-color: transparent;
+    box-shadow: 0px 1px 7px #888888;
+    z-index: 99999;
 }
-#mapid {
-    height: 40%;
-}*/
-/*#mapid { 
-    height: 800px;
-    width: 1200px;
-    position: absolute;
 
-    left: 0px;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border: 1px solid #777;
-    box-shadow: 2px 3px 3px 0px rgba(196,192,196,1);
-    
+.navbar-brand {
+    font-family: Futura, Trebuchet MS, Arial, sans-serif;
+    font-size: 24px;
+    color: #4D4D4D;
 }
 
 
-.wrapper {
-    display: flex;
-    align-items: stretch;
-}
 
-#sidebar {
-    min-width: 300px;
-    max-width: 300px;
-}
 
-#sidebar.active {
-    margin-left: -250px;
-}
-
-.active{
-    margin: 0 40px 0 20px;
-}
-*/
 h1, h2, h3, h4, p {
     font-family: Futura, Trebuchet MS, Arial, sans-serif;
 }
@@ -106,137 +86,78 @@ span {
     border-radius: 5px;
 }
 
-.navbar-default {
-    font-family: Futura, Trebuchet MS, Arial, sans-serif;
-    font-size: 20px;
-    color: #4D4D4D;
-    background-color: white;
-    border-color: transparent;
-    box-shadow: 0px 1px 7px #888888;
-    z-index: 99999;
-}
 
-.navbar-brand {
-    font-family: Futura, Trebuchet MS, Arial, sans-serif;
-    font-size: 24px;
-    color: #4D4D4D;
-}
 
 #cg-flag {
     position: fixed;
     left: 10px;
     top: 2px;
 }
-
+ 
 #home {
     width: 100%;
     height: 100vh;
-    /*background-image: url(../img/chicago_bw.jpg);*/
+    /*background-image: url('{{ STATIC_URL }}img/construction.jpg');*/
+    /*background-image: url("{% static 'img/construction.jpg' %}");*/
+    background-image: url('../img/construction.jpg');
     background-size:cover;
     background-position: center;
     font-family: futura, sans-serif;
-    color: #b3ddf2;
+    color: #ffa116;
     text-align: center;
     font-size: 36px;
     padding-top: 120px;
+
 }
 
-.shadow {
-    text-shadow: 1px 1px black;
-    text-align: center;
-}
 
-.parcoords {
-    display: block;
-    margin-right: 20px;
-}
 
-.parcoords svg,
-.parcoords canvas {
-    font: 10px sans-serif;
+
+
+
+
+
+
+
+
+
+/*
+ #map-container {
+    height: 100%;
+}
+#mapid {
+    height: 40%;
+}*/
+/*#mapid { 
+    height: 800px;
+    width: 1200px;
     position: absolute;
+
+    left: 0px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 1px solid #777;
+    box-shadow: 2px 3px 3px 0px rgba(196,192,196,1);
+    
 }
 
-.parcoords canvas {
-    opacity: 0.9;
-    pointer-events: none;
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
 }
 
-.axis .title {
-    font-size: 10px;
-    transform: rotate(-21deg) translate(-5px,-6px);
-    fill: #222;
+#sidebar {
+    min-width: 300px;
+    max-width: 300px;
 }
 
-.axis line,
-.axis path {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 1px;
+#sidebar.active {
+    margin-left: -250px;
 }
 
-.axis .tick text {
-    fill: #222;
-    opacity: 0;
-    pointer-events: none;
+.active{
+    margin: 0 40px 0 20px;
 }
-
-.axis.manufac_name .tick text,
-.axis.food_group .tick text {
-    opacity: 1;
-}
-
-.axis:hover line,
-.axis:hover path,
-.axis.active line,
-.axis.active path {
-    fill: none;
-    stroke: #222;
-    stroke-width: 1px;
-}
-
-.axis:hover .title {
-    font-weight: bold;
-}
-
-.axis:hover .tick text {
-    opacity: 1;
-}
-
-.axis.active .title {
-    font-weight: bold;
-}
-
-.axis.active .tick text {
-    opacity: 1;
-    font-weight: bold;
-}
-
-.brush .extent {
-    fill-opacity: .3;
-    stroke: #fff;
-    stroke-width: 1px;
-}
-
-.title-div{
-    margin-top: 1px;
-}
-
-.TractIDdiv {
-    flex-flow: 1;
-}
-
-.TractID {
-    margin-top: 45px;
-    width: 100%;
-    height: 492px;
-    tab-size: 100;
-    font-size: 12px;
-    overflow: auto;
-}
-
-#mobile-message{
-    margin-left: 20px;
-    margin-right: 20px;
-    text-align: center;
-}
+*/
