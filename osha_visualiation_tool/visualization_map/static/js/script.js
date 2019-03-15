@@ -36,6 +36,7 @@ var popUpContent = feature.properties["employer"];
 // popUpContent += feature.properties["artist_name"];
 
 layer = L.circleMarker(latlng,geojsonMarkerOptions);
+
 layer.bindPopup(popUpContent,{offset: new L.point(0,0), maxWidth: 560
 });
     layer.on({

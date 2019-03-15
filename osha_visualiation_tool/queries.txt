@@ -1,6 +1,8 @@
 python3 manage.py inspectdb > models2.py
 
-
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 ##inspection data with zipcodes geom
 select 
 EXTRACT(YEAR FROM osha_inspection_data.open_date) as year_s,
@@ -18,7 +20,9 @@ WHERE sic_codes_data.code = osha_inspection_data.sic_code
 AND naics_codes_data.codes = osha_inspection_data.naics_code
 AND zipcodes_spatial_data.geoid10 = cast(osha_inspection_data.site_zip as varchar)
 
-
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 
 -- states shapefile states = stusps
 select * from us_states_spatial_data
@@ -26,8 +30,10 @@ select * from us_states_spatial_data
 -- zipcodes = geoid10
 select * from zipcodes_spatial_data
 
-GEOM with fatalities 
-
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
+TABLE: osha_severe_injury_data
 
 ##ADDING GEOM TO FATALITIES 
 #will need a primary key 
@@ -45,16 +51,22 @@ fatalities_data_table.state,
 us_states_spatial_data.geom
 order by count
 
+alter table osha_severe_injury_data add column geom geometry(Point, 4326);
+update osha_severe_injury_data set geom=st_SetSrid(st_MakePoint(longitude, latitude), 4326);
 
-
-
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 zipcodes_spatial_data
 
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 
-
-##Inspection query
+##Inspection Query
 ##Need to add Geom 
 ## not sure if adding ZIP or STATE
+#This can be a good query for Chart
 
 select activity_nr,
 site_state,
@@ -71,9 +83,11 @@ WHERE sic_codes_data.code = osha_inspection_data.sic_code
 AND naics_codes_data.codes = osha_inspection_data.naics_code
 
 
-
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 ## injuries lat/long only
-##
+## includes body part data
 select 
 injury_index, 
 event_date, 
@@ -89,10 +103,16 @@ WHERE osha_severe_injury_data.naics_code = naics_codes_data.codes
 
 
 
-
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 
 ##osha_severe_injury_data
 ##count of injury
+#MODEL FatalitiesStatesCount
+#By state
+
+
 
 select 
 Distinct EXTRACT(YEAR FROM osha_severe_injury_data.event_date) as year_s,
@@ -109,6 +129,46 @@ osha_severe_injury_data.event_date
 order by count DESC
 
 
+select 
+distinct EXTRACT(YEAR FROM osha_fatalities_data.incident_date) as year_s,
+count(osha_fatalities_data.state),
+osha_fatalities_data.state,
+us_states_spatial_data.geom
+from 
+us_states_spatial_data,osha_fatalities_data
+where osha_fatalities_data.state = us_states_spatial_data.stusps
+group by
+year_s,
+osha_fatalities_data.state,
+us_states_spatial_data.geom
+order by count;
+
+
+
+# by zip code 
+#breaks the DB
+select 
+Distinct EXTRACT(YEAR FROM osha_severe_injury_data.event_date) as year_s,
+count(osha_severe_injury_data.state), 
+osha_severe_injury_data.state,
+us_states_spatial_data.geom
+from osha_severe_injury_data, us_states_spatial_data
+WHERE lower(us_states_spatial_data.name) = lower(osha_severe_injury_data.state)
+group by 
+year_s,
+osha_severe_injury_data.state, 
+us_states_spatial_data.geom,
+osha_severe_injury_data.event_date
+order by count DESC
+
+
+
+
+
+
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 
 
 CREATE TABLE films_recent AS
@@ -142,6 +202,9 @@ ALTER TABLE fatalities_states_count ADD COLUMN fid SERIAL PRIMARY KEY;
 
 ALTER TABLE fatalities_states_count FROP COLUMN id ;
 
+##########################################################################################################################################################
+##########################################################################################################################################################
+##########################################################################################################################################################
 
 select 
 EXTRACT(YEAR FROM osha_inspection_data.open_date) as year_s,
@@ -160,23 +223,9 @@ AND naics_codes_data.codes = osha_inspection_data.naics_code
 AND zipcodes_spatial_data.geoid10 = cast(osha_inspection_data.site_zip as varchar)
 
 
-
-
-
-
-
-
-
 alter table your_table add column geom geometry(Point, 4326);
 Then use st_SetSrid and st_MakePoint to populate the column:
 update your_table set geom=st_SetSrid(st_MakePoint(longitude, latitude), 4326);
-
-
-
-
-alter table osha_severe_injury_data add column geom geometry(Point, 4326);
-
-update osha_severe_injury_data set geom=st_SetSrid(st_MakePoint(longitude, latitude), 4326);
 
 
 
