@@ -2,10 +2,10 @@ function initialization() {
 
 	// get model data from script in index.html
 console.log(response);
-// console.log(response1);
-// console.log(response2);
+console.log(response1);
+console.log(response2);
 
-const mymap = L.map('mapid').setView([40.456880, -99.177321], 4); //38.724066, -99.262098 //
+const mymap = L.map('mapid').setView([27.815604, -16.603890], 2); //38.724066, -99.262098 //
   
 // default OSM map for now
 var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,7 +21,8 @@ var baseMaps = {
 
 var markers = L.markerClusterGroup();
 
-// Layer for Injury
+
+// Layer for Fatalities 
 var layer = L.geoJSON(response, {pointToLayer: function (feature, latlng) {
   var geojsonMarkerOptions = {
   radius: 7,
@@ -57,6 +58,132 @@ return markers.addLayer(layer).addTo(mymap);
 } 
 }) //end of layer1
 
+// severe injury
+var layer1 = L.geoJSON(response1, {pointToLayer: function (feature, latlng) {
+  var geojsonMarkerOptions = {
+  radius: 7,
+  fillColor: "#330066",
+  color: "#000", //purple
+  weight: 1,
+  opacity: 1,
+  fillOpacity: .5
+};
+var popUpContent = "<p><b>Employer: <b>" + feature.properties["employer"] + "</p>";
+popUpContent += "<p><b>" + "City: " + feature.properties["city"]  + "</p>";
+popUpContent += "<p><b>" + "Date of Incident: " + feature.properties["event_date"]  + "</p>";
+popUpContent += "<p><b>" + "Industry: " + feature.properties["industry"]  + "</p>";
+popUpContent += "<p><b>" + "Description: " + feature.properties["final_description"]  + "</p>";
+
+
+
+layer1 = L.circleMarker(latlng,geojsonMarkerOptions);
+
+layer1.bindPopup(popUpContent,{offset: new L.point(0,0), maxWidth: 560
+});
+    layer1.on({
+mouseover: function(){
+    this.openPopup();
+},
+mouseout: function(){
+    this.closePopup();
+},
+click: function(){
+    layer1.on(popUpContent);
+}
+});
+
+// return layer.addTo(mymap);
+// return layer
+return markers.addLayer(layer1).addTo(mymap);
+} 
+}) //end of layer3
+
+
+
+
+
+
+
+
+
+var layer2 = L.geoJSON(response2, {pointToLayer: function (feature, latlng) {
+  var geojsonMarkerOptions = {
+  radius: 7,
+  fillColor: "#330066",
+  color: "#000", //purple
+  weight: 1,
+  opacity: 1,
+  fillOpacity: .5
+};
+var popUpContent = feature.properties["employer"];
+// console.log(feature);
+// popUpContent += feature.properties["artist_name"];
+
+layer2 = L.circleMarker(latlng,geojsonMarkerOptions);
+
+layer2.bindPopup(popUpContent,{offset: new L.point(0,0), maxWidth: 560
+});
+    layer2.on({
+mouseover: function(){
+    this.openPopup();
+},
+mouseout: function(){
+    this.closePopup();
+},
+click: function(){
+    layer2.on(popUpContent);
+}
+});
+
+// return layer.addTo(mymap);
+// return layer
+return markers.addLayer(layer2).addTo(mymap);
+} 
+}) //end of layer1
+
+
+var layer3 = L.geoJSON(response3, {pointToLayer: function (feature, latlng) {
+  var geojsonMarkerOptions = {
+  radius: 7,
+  fillColor: "#330066",
+  color: "#000", //purple
+  weight: 1,
+  opacity: 1,
+  fillOpacity: .5
+};
+var popUpContent = "<p><b>Employer: <b>" + feature.properties["employer"] + "</p>";
+
+
+layer3 = L.circleMarker(latlng,geojsonMarkerOptions);
+
+layer3.bindPopup(popUpContent,{offset: new L.point(0,0), maxWidth: 560
+});
+    layer3.on({
+mouseover: function(){
+    this.openPopup();
+},
+mouseout: function(){
+    this.closePopup();
+},
+click: function(){
+    layer3.on(popUpContent);
+}
+});
+
+// return layer.addTo(mymap);
+// return layer
+return markers.addLayer(layer3).addTo(mymap);
+} 
+}) //end of layer3
+
+
+
+
+
+
+
+
+
 // console.log(layer)
 
 // loading GeoJSON file - Here my html and usa_adm.geojson file resides in same folder
@@ -83,9 +210,9 @@ return markers.addLayer(layer).addTo(mymap);
 
 // var polygon = L.polygon(response1)
 
-var polygon = L.polygon(response1, {color: 'red'});
+// var polygon = L.polygon(response1, {color: 'red'});
 
-polygon.addTo(mymap);
+// polygon.addTo(mymap);
 
 
 
@@ -111,8 +238,10 @@ polygon.addTo(mymap);
 
 
 var groupedOverlays = {
-	"Injuries States": layer,
-	"Fatalities": polygon
+	"Fatalities FY 16-17": layer,
+  "Severe Inuries": layer1,
+	"Accident Inpsections": layer2,
+  "Complaint Inpsections": layer3
 
 };
 

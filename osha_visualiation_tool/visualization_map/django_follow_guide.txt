@@ -66,7 +66,7 @@ from django.contrib.gis.db import models
 
 IF your db is all ready created us the following command
 
-python3 manage.py inspectdb > models.py
+python3 manage.py inspectdb > models_rev1.py
 
 
 

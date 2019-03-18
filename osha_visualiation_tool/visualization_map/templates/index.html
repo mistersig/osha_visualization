@@ -22,10 +22,12 @@
     <!--BOOTSTRAP NAVBAR-->
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light" >
         <div class="container">
-            <a class="navbar-brand" href="#home"><img id="cg-flag" src="{% static "img/worker.png" %}" alt="Home"></a>
+            <!-- <a class="navbar-brand" href="#home"><img id="cg-flag" src="{% static "img/worker.png" %}" alt="Home"></a> -->
+            <a class="navbar-brand" href="#home">OSHA Visualization Tool</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- THESE DO NOT WORK CREATE NEW PAGES -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a class="nav-link" href="#home">Home<span class="sr-only">(current)</span></a></li>
@@ -36,45 +38,37 @@
             </div>
         </div>
     </nav>
-    <!--HOME/SPLASH-->
-    <div class="jumbotron jumbotron-fluid" id="home">
-        <div class="container-fluid">
-            <br>
-            <h1 class="shadow">Chicago Displacement &amp; Gentrification</h1>
-            <h3 class="shadow">An application to convey areas of potential population displacement or gentrification in Chicago from 2010-2016</h3>
-            <h4 class="shadow">Measuring changes in economics, education, housing, and population</h4>
-        </div>
-    </div>
-    <!--MAP-->
-    <div id="maparea">
-        <div class="container-fluid">
-            <div id='mapid'>
-                <div id="sidebar"></div>
-            </div>
-        </div>
-    </div>
-    <!--DATA VIZ-->
-    <div id="dataarea">
-        <div class="container-fluid data-container">
-            <div id="data">
+
+    <div class="container-fluid">
+        <div  class="row">
+            <div class="col-sm-8">
+                <!-- <small class="visible-xs"><strong> Click on Shit</strong></small> -->
+                <small class="visible-sm"><strong> Note:</strong> This site is best viewed on a computer</small>
+                <div id='mapid'></div>
                 
             </div>
-        </div>
-    </div>
-    <!--ABOUT-->
-    <div id="aboutarea">
-        <div class="container-fluid">
-            <div id="about">
-                <h3>About the project</h3>
-<!--                 <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p> -->
-
-                <p>OSHA <b>Gentrification Index</b> OSHA</p>
-  
-                <h3>About The Developer</h3>
-                <p>Developed by <a href="https://mistersig.github.io/" target=blank>Sigfrido Gomez</a> for the University of Wisconsin-Madison's Geography 778 Capstone project.</p>
+            <div class="col-sm-4 sidebar">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form>
+                            <div class="form-group">
+                                <div class="input-group" style="margin-top:10px">
+                                    <input class="form-control input-lg search-text" id="search-address" placeholder="Search for an address" type="text" style="width:100%" autocomplete="off">
+                                    <div class="input-group-btn">
+                                        <input class="btn btn-default btn-lg" id="search-button" type="button" value="Search">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                                        
+                    </div>
+                </div>
+                <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p>
             </div>
         </div>
     </div>
+ 
+
     <!-- Leaflet JS -->
     <script src= "{% static "lib/leaflet/leaflet.js" %}"></script>
     <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -94,9 +88,19 @@
     <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
     <!-- pass Model data here first  -->
     <script type="text/javascript" >
-        var response = {{ injurys|safe }};
-        var response1 = {{ fatalities_states|safe }};
-        // var response2 = {{injuries_states|safe }};
+        var response = {{ fatalities_fy_16_17|safe }};
+        var response1 = {{ severe_injuries|safe }};
+        var response2 = {{ accident_data_17|safe }};
+        var response3 = {{ complaint_data_17|safe }};
+        var response4 = {{ fat_cat_data_17|safe }};
+        var response5 = {{ follow_up_data_17|safe }};
+    
+        var response6 = {{ monitoring_data_17|safe }};
+        var response7 = {{ variance_data_17|safe }};
+        var response8 = {{ referrals_data_17|safe }};
+        var response9 = {{ planned_data_17|safe }};
+
+
     </script>
     <!-- JS custom script  -->
     <script type="text/javascript" src="{% static "js/script.js" %}"></script>
