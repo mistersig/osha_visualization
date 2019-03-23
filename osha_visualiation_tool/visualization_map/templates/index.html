@@ -50,7 +50,8 @@
             <div class="col-sm-4 sidebar">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form>
+                        <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p>
+<!--                         <form>
                             <div class="form-group">
                                 <div class="input-group" style="margin-top:10px">
                                     <input class="form-control input-lg search-text" id="search-address" placeholder="Search for an address" type="text" style="width:100%" autocomplete="off">
@@ -59,15 +60,158 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                                        
+                        </form> -->
+                                        <!-- search bar -->
                     </div>
+
                 </div>
-                <p>Tract values were derived from the <a href="https://www.census.gov/programs-surveys/acs/" target=blank>American Community Survey</a> datasets. To arrive at our map display values, we calculated the percentage change between the 2016 and 2010 data to measure differences over time. CTA and new buildings data were downloaded from the city of Chicago's <a href="https://data.cityofchicago.org/" target=blank>data portal</a>.</p>
+                <!-- put stuff in here  -->
+
+                <!--Accordion wrapper-->
+                <div class="accordion md-accordion" id="accordionEx1" role="tablist" aria-multiselectable="true">
+                  <!-- Accordion card -->
+                  <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingTwo1">
+                      <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1" aria-expanded="false" aria-controls="collapseTwo1">
+                        <h5 class="mb-0">
+                          Fatalities  <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                      </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <!-- id is the menu option  -->
+                    <div id="collapseTwo1" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- Accordion card -->
+
+                  <!-- Accordion card -->
+                  <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingTwo2">
+                      <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo21"
+                        aria-expanded="false" aria-controls="collapseTwo21">
+                        <h5 class="mb-0">
+                          Severe Injuries <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                      </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwo21" class="collapse" role="tabpanel" aria-labelledby="headingTwo21" data-parent="#accordionEx1">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- Accordion card -->
+
+                  <!-- Accordion card -->
+                  <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingThree31">
+                      <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseThree31"
+                        aria-expanded="false" aria-controls="collapseThree31">
+                        <h5 class="mb-0">
+                          Inspections <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                      </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseThree31" class="collapse" role="tabpanel" aria-labelledby="headingThree31" data-parent="#accordionEx1">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                        wolf
+                        moon
+         
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- Accordion card -->
+
+                </div>
+                <!-- Accordion wrapper -->
+
+
+
+
+
+
+                
+
+
             </div>
         </div>
     </div>
  
+
+
+   <div class = "caption-panel">
+    <!-- back -->
+    <div id = "back-to-maps-element">
+      <button href = <a class = "more-maps" href="#">
+        <i class="fas fa-chevron-left"></i>
+        Back to all maps
+      </button>
+    </div>
+
+    <!-- other pages -->
+    <div class="caption-content-element"> 
+    
+      <div id= "osha_fatalities_map" class = "caption-content-element">
+        Fatalities of 2017
+        <br>
+        <br>
+        <a class = "digital-collections" href="http://leventhalmap.org/id/14113"target="_blank">View in digital Collections</a>
+        <br>
+      </div>
+      
+      <div id= "osha_severe_injuries_map" class = "caption-content-element">
+        severe injuries 2017
+        <br>
+        <br>
+        <a class = "digital-collections" href="https://collections.leventhalmap.org/search/commonwealth:4t64hr23d"target="_blank">View in digital Collections</a>
+        <br>
+      </div>
+      
+      <!-- <div id= "caption-1831" class = "caption-content-element"> -->
+      <div id= "inspections" class = "caption-content-element">
+        Various Inspections
+
+        <br>
+        <br>
+        <a class = "digital-collections" href="https://collections.leventhalmap.org/search/commonwealth:7h149x223"target="_blank">View in digital Collections</a>
+        <br>
+      </div>
+    </div>
+    
+    <div id = "acquisition-layer-parent-element">
+      <div id = "acquisition-layer-question">
+      How does this map compare to major U.S. land aquisitions?</div>
+      <div id = "acquisition-layer-control"></div>
+      <div id = "acquisition-layer-hint">Hint: Click on any purchase to learn more.</div>
+    </div>
+    
+    <div id = "transparency-parent-element">
+      <div id = "transparency-question">
+      What has changed from then to now?
+      
+      </div>
+      <div id = "transparency-control"></div>
+    </div>
+</div>
+
 
     <!-- Leaflet JS -->
     <script src= "{% static "lib/leaflet/leaflet.js" %}"></script>
@@ -86,19 +230,26 @@
     <!-- Bootstrap JS -->
     <script type="text/javascript" src="{% static "lib/bootstrap-4.0.0-dist/js/bootstrap.min.js" %}"></script>
     <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+    <script type="text/javascript"  src="{% static "lib/leaflet_choropleth/dist/choropleth.js" %}"></script>
+
+    
+<!-- choropleth plugin -->
+    <script src="path/to/choropleth.js"></script>
     <!-- pass Model data here first  -->
     <script type="text/javascript" >
-        var response = {{ fatalities_fy_16_17|safe }};
-        var response1 = {{ severe_injuries|safe }};
-        var response2 = {{ accident_data_17|safe }};
-        var response3 = {{ complaint_data_17|safe }};
-        var response4 = {{ fat_cat_data_17|safe }};
-        var response5 = {{ follow_up_data_17|safe }};
-    
-        var response6 = {{ monitoring_data_17|safe }};
-        var response7 = {{ variance_data_17|safe }};
-        var response8 = {{ referrals_data_17|safe }};
-        var response9 = {{ planned_data_17|safe }};
+
+        var severe_injury = {{ severe_injuries|safe }};
+        
+        var fatalities = {{ fatalities_fy_16_17|safe }};
+
+        var accident_data = {{ accident_data_17|safe }};
+        var complaint_data = {{ complaint_data_17|safe }};
+        var fat_cat_data = {{ fat_cat_data_17|safe }};
+        var follow_up_data = {{ follow_up_data_17|safe }};
+        var monitoring_data = {{ monitoring_data_17|safe }};
+        var variance_data = {{ variance_data_17|safe }};
+        var referrals_data = {{ referrals_data_17|safe }};
+        var planned_data = {{ planned_data_17|safe }};
 
 
     </script>

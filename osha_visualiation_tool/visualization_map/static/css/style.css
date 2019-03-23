@@ -38,7 +38,7 @@ span {
     
 }
 
-
+/* Sidebar */
 #sidebar{
     height: 80vh;
     width: 100%;
@@ -48,7 +48,7 @@ span {
     background-color: white;
 
 }
-s
+
 
 .chart-title{
     margin: 2px;
@@ -92,3 +92,6 @@ s
     box-shadow: 0 0 15px rgba(0,0,0,0.4);
     border-radius: 5px;
 }
+
+
+
