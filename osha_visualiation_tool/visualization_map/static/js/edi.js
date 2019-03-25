@@ -1357,3 +1357,87 @@ L.choropleth(geojsonData, {
 
 
 
+// source:http://leafletjs.com/examples/choropleth/
+function changeLegend(layer,tractScales,map){
+    //lol, MTA is NYC
+    var MTA = ['CTA "L" Routes','CTA "L" Stations','CTA Stations 1-Mile Buffer','New Buildings Since 2010']
+    var expressed = layer.name;
+    
+    //if adding MTA layer, don't mess with legend - the rest is housed in this IF statement
+    if (MTA.includes(expressed) == false & expressed != 'Gentrification Index' & expressed != 'None'){
+        
+        //get rid of previous legend
+        var oldLegend = $('.legend');
+        if (oldLegend !== null){
+            oldLegend.remove();
+        }
+        
+        //set up (new) legend
+        var domain = (tractScales[expressed].domain())
+        var max = Math.max.apply(null, domain);
+        var min = Math.min.apply(null, domain);
+        var colors = tractScales[expressed].range();
+        var quantiles = tractScales[expressed].quantiles();
+        quantiles.unshift(min);
+        quantiles.push(max);
+
+        var legend = L.control({position: 'bottomleft'});
+
+        legend.onAdd = function(map){
+
+            var div = L.DomUtil.create('div', 'info legend')
+            var labels = [];
+
+            div.innerHTML += '<p><b>' + expressed + '</b></p>'
+
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < quantiles.length-1; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colors[i] + '"></i> ' +
+                    quantiles[i].toFixed(0) + '%' + (String(quantiles[i + 1]) ? ' <b>-</b> ' + quantiles[i + 1].toFixed(0) + '%<br>' : '% +');
+            };
+            return div;
+        };
+        legend.addTo(map);
+    } else if (MTA.includes(expressed) == false & expressed == 'Gentrification Index') {
+        //get rid of previous legend
+        var oldLegend = $('.legend');
+        if (oldLegend !== null){
+            oldLegend.remove();
+        }
+        
+        //set up (new) legend
+        var domain = (tractScales[expressed].domain())
+        var max = Math.max.apply(null, domain);
+        var min = Math.min.apply(null, domain);
+        var colors = tractScales[expressed].range();
+        var quantiles = tractScales[expressed].quantiles();
+        quantiles.unshift(min);
+        quantiles.push(max);
+
+        var legend = L.control({position: 'bottomleft'});
+
+        legend.onAdd = function(map){
+
+            var div = L.DomUtil.create('div', 'info legend')
+            var labels = [];
+
+            div.innerHTML += '<p><b>' + expressed + '</b></p>'
+
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < quantiles.length-1; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colors[i] + '"></i> ' +
+                    quantiles[i].toFixed(3) + (String(quantiles[i + 1]) ? ' <b>-</b> ' + quantiles[i + 1].toFixed(3) + '<br>' : ' +');
+            };
+            return div;
+        };
+        legend.addTo(map);
+    } else if (MTA.includes(expressed) == false & expressed == 'None'){
+        //get rid of previous legend
+        var oldLegend = $('.legend');
+        if (oldLegend !== null){
+            oldLegend.remove();
+        }
+    }
+}; // end of changeLegend

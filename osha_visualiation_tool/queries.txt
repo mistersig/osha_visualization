@@ -83,6 +83,47 @@ select * from fatalities_fy_16_17;
 ##########################################################################################################################################################
 
 
+
+
+####QUERY FOR PERCENTAGES
+
+select
+insp_type,
+(count(insp_type)* 100.0 / (select count(insp_type) from osha_inspection_data))*10.0,
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Referral%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- ALL inspections that happened
 CREATE TABLE all_inspections_17 as 
 select
