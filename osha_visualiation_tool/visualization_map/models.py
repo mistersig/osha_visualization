@@ -13,145 +13,13 @@ from decimal import Decimal
 
 
 
-class SevereInjury2017(models.Model):
-    event_date = models.DateField(blank=True, null=True)
-    employer = models.CharField(max_length=128, blank=True, null=True)
-    address1 = models.CharField(max_length=128, blank=True, null=True)
-    city = models.CharField(max_length=64, blank=True, null=True)
-    state = models.CharField(max_length=32, blank=True, null=True)
-    zipcode = models.IntegerField(blank=True, null=True)
-    latitude = models.FloatField(blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
-    industry = models.CharField(max_length=300, blank=True, null=True)
-    hospitalized = models.SmallIntegerField(blank=True, null=True)
-    amputation = models.SmallIntegerField(blank=True, null=True)
-    final_description = models.CharField(max_length=3000, blank=True, null=True)
-    body_part = models.CharField(max_length=64, blank=True, null=True)
-    geom = models.PointField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
 
-    class Meta:
-        managed = False
-        db_table = 'severe_injury_2017'
-
-
-class FatalitiesFy1617(models.Model):
-    name = models.CharField(max_length=100, blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    fatalities = models.BigIntegerField(blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'fatalities_fy_16_17'
-
-
-
-class Planned17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'planned_17'
-
-
-class Referrals17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'referrals_17'
-
-class Variance17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'variance_17'
-
-class NoInspections17(models.Model):
-    estab_name = models.CharField(max_length=128, blank=True, null=True)
-    site_city = models.CharField(max_length=64, blank=True, null=True)
-    site_state = models.CharField(max_length=2, blank=True, null=True)
-    site_zip = models.IntegerField(blank=True, null=True)
-    owner_type = models.CharField(max_length=32, blank=True, null=True)
-    adv_notice = models.CharField(max_length=2, blank=True, null=True)
-    description = models.CharField(max_length=128, blank=True, null=True)
-    titles = models.CharField(max_length=300, blank=True, null=True)
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    insp_scope = models.CharField(max_length=20, blank=True, null=True)
-    union_status = models.CharField(max_length=6, blank=True, null=True)
-    open_date = models.DateField(blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'no_inspections_17'
-
-
-class Monitoring17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'monitoring_17'
-
-
-class Followup17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'followup_17'
-
-class FatCat17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'fat_cat_17'
-
-class Complaint17(models.Model):
-    insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
-    geom = models.MultiPolygonField(blank=True, null=True)
-    fid = models.AutoField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'complaint_17'                                                
 
 class Accident17(models.Model):
     insp_type = models.CharField(max_length=20, blank=True, null=True)
-    count = models.BigIntegerField(blank=True, null=True)
-    stusps = models.CharField(max_length=2, blank=True, null=True)
+    score = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    state_name = models.CharField(max_length=100, blank=True, null=True)
+    code = models.CharField(max_length=2, blank=True, null=True)
     geom = models.MultiPolygonField(blank=True, null=True)
     fid = models.AutoField(primary_key=True)
 
@@ -160,25 +28,207 @@ class Accident17(models.Model):
         db_table = 'accident_17'
 
 
-class AllInspections17(models.Model):
-    estab_name = models.CharField(max_length=128, blank=True, null=True)
-    site_city = models.CharField(max_length=64, blank=True, null=True)
-    site_state = models.CharField(max_length=2, blank=True, null=True)
-    site_zip = models.IntegerField(blank=True, null=True)
-    owner_type = models.CharField(max_length=32, blank=True, null=True)
-    adv_notice = models.CharField(max_length=2, blank=True, null=True)
-    description = models.CharField(max_length=128, blank=True, null=True)
-    titles = models.CharField(max_length=300, blank=True, null=True)
+class FatCat17(models.Model):
     insp_type = models.CharField(max_length=20, blank=True, null=True)
-    insp_scope = models.CharField(max_length=20, blank=True, null=True)
-    union_status = models.CharField(max_length=6, blank=True, null=True)
-    open_date = models.DateField(blank=True, null=True)
+    score = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    state_name = models.CharField(max_length=100, blank=True, null=True)
+    code = models.CharField(max_length=2, blank=True, null=True)
     geom = models.MultiPolygonField(blank=True, null=True)
     fid = models.AutoField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = 'all_inspections_17'
+        db_table = 'fat_cat_17'
+
+
+
+
+
+class Followup17(models.Model):
+    insp_type = models.CharField(max_length=20, blank=True, null=True)
+    score = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    state_name = models.CharField(max_length=100, blank=True, null=True)
+    code = models.CharField(max_length=2, blank=True, null=True)
+    geom = models.MultiPolygonField(blank=True, null=True)
+    fid = models.AutoField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'followup_17'
+
+
+
+
+
+
+
+
+# class SevereInjury2017(models.Model):
+#     event_date = models.DateField(blank=True, null=True)
+#     employer = models.CharField(max_length=128, blank=True, null=True)
+#     address1 = models.CharField(max_length=128, blank=True, null=True)
+#     city = models.CharField(max_length=64, blank=True, null=True)
+#     state = models.CharField(max_length=32, blank=True, null=True)
+#     zipcode = models.IntegerField(blank=True, null=True)
+#     latitude = models.FloatField(blank=True, null=True)
+#     longitude = models.FloatField(blank=True, null=True)
+#     industry = models.CharField(max_length=300, blank=True, null=True)
+#     hospitalized = models.SmallIntegerField(blank=True, null=True)
+#     amputation = models.SmallIntegerField(blank=True, null=True)
+#     final_description = models.CharField(max_length=3000, blank=True, null=True)
+#     body_part = models.CharField(max_length=64, blank=True, null=True)
+#     geom = models.PointField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'severe_injury_2017'
+
+
+# class FatalitiesFy1617(models.Model):
+#     name = models.CharField(max_length=100, blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     fatalities = models.BigIntegerField(blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'fatalities_fy_16_17'
+
+
+
+# class Planned17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'planned_17'
+
+
+# class Referrals17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'referrals_17'
+
+# class Variance17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'variance_17'
+
+# class NoInspections17(models.Model):
+#     estab_name = models.CharField(max_length=128, blank=True, null=True)
+#     site_city = models.CharField(max_length=64, blank=True, null=True)
+#     site_state = models.CharField(max_length=2, blank=True, null=True)
+#     site_zip = models.IntegerField(blank=True, null=True)
+#     owner_type = models.CharField(max_length=32, blank=True, null=True)
+#     adv_notice = models.CharField(max_length=2, blank=True, null=True)
+#     description = models.CharField(max_length=128, blank=True, null=True)
+#     titles = models.CharField(max_length=300, blank=True, null=True)
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     insp_scope = models.CharField(max_length=20, blank=True, null=True)
+#     union_status = models.CharField(max_length=6, blank=True, null=True)
+#     open_date = models.DateField(blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'no_inspections_17'
+
+
+# class Monitoring17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'monitoring_17'
+
+
+# class Followup17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'followup_17'
+
+# class FatCat17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'fat_cat_17'
+
+# class Complaint17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'complaint_17'                                                
+
+# class Accident17(models.Model):
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     count = models.BigIntegerField(blank=True, null=True)
+#     stusps = models.CharField(max_length=2, blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'accident_17'
+
+
+# class AllInspections17(models.Model):
+#     estab_name = models.CharField(max_length=128, blank=True, null=True)
+#     site_city = models.CharField(max_length=64, blank=True, null=True)
+#     site_state = models.CharField(max_length=2, blank=True, null=True)
+#     site_zip = models.IntegerField(blank=True, null=True)
+#     owner_type = models.CharField(max_length=32, blank=True, null=True)
+#     adv_notice = models.CharField(max_length=2, blank=True, null=True)
+#     description = models.CharField(max_length=128, blank=True, null=True)
+#     titles = models.CharField(max_length=300, blank=True, null=True)
+#     insp_type = models.CharField(max_length=20, blank=True, null=True)
+#     insp_scope = models.CharField(max_length=20, blank=True, null=True)
+#     union_status = models.CharField(max_length=6, blank=True, null=True)
+#     open_date = models.DateField(blank=True, null=True)
+#     geom = models.MultiPolygonField(blank=True, null=True)
+#     fid = models.AutoField(primary_key=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'all_inspections_17'
 
 
 

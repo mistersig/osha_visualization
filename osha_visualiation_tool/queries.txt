@@ -110,20 +110,6 @@ order by us_states_spatial_data.stusps;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- ALL inspections that happened
 CREATE TABLE all_inspections_17 as 
 select
@@ -147,6 +133,7 @@ AND osha_inspection_data.site_state = us_states_spatial_data.stusps
 AND open_date between '2017-01-01' and '2017-12-31'
 AND insp_scope not like '%No Inspection%'
 order by open_date DESC;
+
 ALTER TABLE all_inspections_17 ADD COLUMN fid SERIAL PRIMARY KEY;
 select * from all_inspections_17;
 

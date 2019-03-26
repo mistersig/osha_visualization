@@ -1,0 +1,154 @@
+
+
+-- referrals inspections didn't take place
+CREATE TABLE referrals_17 as 
+select
+insp_type,
+count(insp_type),
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Referral%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+ALTER TABLE referrals_17 ADD COLUMN fid SERIAL PRIMARY KEY;
+select * from referrals_17;
+UPDATE monitoring_17 SET insp_type = 'Monitoring' WHERE insp_type is NULl;
+
+
+
+-- monitoring inspections didn't take place
+CREATE TABLE monitoring_17 as 
+select
+insp_type,
+count(insp_type),
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Monitoring%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+ALTER TABLE monitoring_17 ADD COLUMN fid SERIAL PRIMARY KEY;
+select * from monitoring_17;
+UPDATE monitoring_17 SET insp_type = 'Monitoring' WHERE insp_type is NULl;
+
+-- planned inspections didn't take place
+CREATE TABLE planned_17 as 
+select
+insp_type,
+count(insp_type),
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Planned%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+ALTER TABLE planned_17 ADD COLUMN fid SERIAL PRIMARY KEY;
+select * from planned_17;
+UPDATE variance_17 SET insp_type = 'Variance' WHERE insp_type = 'Referral';
+
+-- variance inspections didn't take place
+CREATE TABLE variance_17 as 
+select
+insp_type,
+count(insp_type),
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Cariance%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+ALTER TABLE variance_17 ADD COLUMN fid SERIAL PRIMARY KEY;
+select * from variance_17;
+UPDATE variance_17 SET insp_type = 'Variance' WHERE insp_type = 'Referral';
+
+-- complaint inspections didn't take place
+CREATE TABLE complaint_17 as 
+select
+insp_type,
+count(insp_type),
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Complaint%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+ALTER TABLE complaint_17 ADD COLUMN fid SERIAL PRIMARY KEY;
+select * from complaint_17;
+UPDATE complaint_17 SET insp_type = 'Complaint' WHERE insp_type IS NULL;
+
+-- planned inspections didn't take place
+CREATE TABLE followup_17 as 
+select
+insp_type,
+count(insp_type),
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Follow Up%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;
+ALTER TABLE followup_17 ADD COLUMN fid SERIAL PRIMARY KEY;
+select * from followup_17;
+UPDATE followup_17 SET insp_type = 'Follow Up' WHERE insp_type IS NULL;
+
+-- planned inspections didn't take place
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select Rate, count(*) * 100.0 / (select count(*) from MyTable)
+from MyTable
+group by Rate;
+
+
+select
+insp_type,
+(count(insp_type)* 100.0 / (select count(insp_type) from osha_inspection_data))*10.0,
+us_states_spatial_data.stusps,
+us_states_spatial_data.geom
+from osha_inspection_data
+right JOIN us_states_spatial_data
+ON osha_inspection_data.site_state = us_states_spatial_data.stusps
+AND open_date between '2017-01-01' and '2017-12-31'
+AND insp_type LIKE '%Referral%'
+AND insp_scope not like '%No Inspection%'
+group by insp_type,us_states_spatial_data.stusps,us_states_spatial_data.geom
+order by us_states_spatial_data.stusps;

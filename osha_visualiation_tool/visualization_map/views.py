@@ -8,9 +8,9 @@ from django.shortcuts import render
 # from visualization_map.models import OshaSevereInjuryData,FatalitiesStatesCount
 # from visualization_map.models import FatalitiesStatesCountYear, FatalitiesStatesAllYears, SevereInjuryData, InspectionStateAll
 # from visualization_map.models import NoInspections17,AllInspections17,FatalitiesFy1617,SevereInjury2017
+# from visualization_map.models import FatalitiesFy1617,SevereInjury2017,Accident17,Complaint17,FatCat17,Followup17,Variance17,Referrals17,Planned17,Monitoring17
 
-
-from visualization_map.models import FatalitiesFy1617,SevereInjury2017,Accident17,Complaint17,FatCat17,Followup17,Variance17,Referrals17,Planned17,Monitoring17
+from visualization_map.models import Accident17, FatCat17,Followup17
 
 from django.core import serializers
 # from django.core import serialize
@@ -38,46 +38,47 @@ from django.shortcuts import render,redirect
 def index(request):
 	if request.method == 'GET':
 		#injury_data
-		fatal_16_17years = FatalitiesFy1617.objects.all()
-		fatal_fiscal_data = serializers.serialize('geojson', fatal_16_17years, fields=('name','stusps','fatalities','geom','fid'))
+		# fatal_16_17years = FatalitiesFy1617.objects.all()
+		# fatal_fiscal_data = serializers.serialize('geojson', fatal_16_17years, fields=('name','stusps','fatalities','geom','fid'))
 
-		severe_injuries_2017 = SevereInjury2017.objects.all()
-		severe_data = serializers.serialize('geojson', severe_injuries_2017, fields=('event_date','employer','address1','city','state','zipcode','latitude','longitude','industry','hospitalized','amputation','final_description','body_part','geom','fid'))		
+		# severe_injuries_2017 = SevereInjury2017.objects.all()
+		# severe_data = serializers.serialize('geojson', severe_injuries_2017, fields=('event_date','employer','address1','city','state','zipcode','latitude','longitude','industry','hospitalized','amputation','final_description','body_part','geom','fid'))		
 
 		
 		accident_2017 = Accident17.objects.all()
-		accident_data = serializers.serialize('geojson', accident_2017, fields=('insp_type','count','stusps','geom','fid'))
+		accident_data = serializers.serialize('geojson', accident_2017, fields=('insp_type','score','state_name','code','geom','fid'))
 
-		complaint_2017 = Complaint17.objects.all()
-		complaint_data = serializers.serialize('geojson', complaint_2017, fields=('insp_type','count','stusps','geom','fid'))
+		# complaint_2017 = Complaint17.objects.all()
+		# complaint_data = serializers.serialize('geojson', complaint_2017, fields=('insp_type','score','state_name','code','geom','fid'))
 
 		fat_cat_2017 = FatCat17.objects.all()
-		fat_cat_data = serializers.serialize('geojson', fat_cat_2017, fields=('insp_type','count','stusps','geom','fid'))
+		fat_cat_data = serializers.serialize('geojson', fat_cat_2017, fields=('insp_type','score','state_name','code','geom','fid'))
 
 
 		follow_up_2017 = Followup17.objects.all()
-		follow_up_data = serializers.serialize('geojson', follow_up_2017, fields=('insp_type','count','stusps','geom','fid'))
+		follow_up_data = serializers.serialize('geojson', follow_up_2017, fields=('insp_type','score','state_name','code','geom','fid'))
 
-		monitoring_2017 = Monitoring17.objects.all()
-		monitoring_data = serializers.serialize('geojson', monitoring_2017, fields=('insp_type','count','stusps','geom','fid'))
-
-
-		variance_2017 = Variance17.objects.all()
-		variance_data = serializers.serialize('geojson', variance_2017, fields=('insp_type','count','stusps','geom','fid'))
-
-		referrals_2017 = Referrals17.objects.all()
-		referral_data = serializers.serialize('geojson', referrals_2017, fields=('insp_type','count','stusps','geom','fid'))
+		# monitoring_2017 = Monitoring17.objects.all()
+		# monitoring_data = serializers.serialize('geojson', monitoring_2017, fields=('insp_type','score','state_name','code','geom','fid'))
 
 
-		planned_2017 = Planned17.objects.all()
-		planned_data = serializers.serialize('geojson', planned_2017, fields=('insp_type','count','stusps','geom','fid'))
+		# variance_2017 = Variance17.objects.all()
+		# variance_data = serializers.serialize('geojson', variance_2017, fields=('insp_type','score','state_name','code','geom','fid'))
+
+		# referrals_2017 = Referrals17.objects.all()
+		# referral_data = serializers.serialize('geojson', referrals_2017, fields=('insp_type','score','state_name','code','geom','fid'))
+
+
+		# planned_2017 = Planned17.objects.all()
+		# planned_data = serializers.serialize('geojson', planned_2017, fields=('insp_type','score','state_name','code','geom','fid'))
+
+
+  
 
 
 
-
-
-
-		return render(request,'index.html',{'fatalities_fy_16_17':fatal_fiscal_data,'severe_injuries':severe_data,'accident_data_17':accident_data,'complaint_data_17':complaint_data,'fat_cat_data_17':fat_cat_data,'follow_up_data_17':follow_up_data,'monitoring_data_17':monitoring_data,'variance_data_17':variance_data,'referrals_data_17':referral_data,'planned_data_17':planned_data})
+		# return render(request,'index.html',{'fatalities_fy_16_17':fatal_fiscal_data,'severe_injuries':severe_data,'accident_data_17':accident_data,'complaint_data_17':complaint_data,'fat_cat_data_17':fat_cat_data,'follow_up_data_17':follow_up_data,'monitoring_data_17':monitoring_data,'variance_data_17':variance_data,'referrals_data_17':referral_data,'planned_data_17':planned_data})
+		return render(request,'index.html',{'accident_data_17':accident_data,'fat_cat_data_17':fat_cat_data,'follow_up_data_17':follow_up_data})
 
 
 
