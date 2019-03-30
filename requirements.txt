@@ -1,7 +1,7 @@
 django
 gunicorn
 django-heroku
-GDAL
+GDAL=2.3.0
 
 
 
