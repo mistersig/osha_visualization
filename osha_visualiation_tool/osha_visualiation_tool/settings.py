@@ -14,16 +14,20 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+import django_heroku
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+# LEARN HOW TO CREATE A ENV FILE
+# for this project just push....
+# fuck webdevelopment has too many layers.... 
+SECRET_KEY ='v^n9+p(qm1cxnh1!ycv-z3)93zd=7p*!$ke@z&z*qp6$2g2&84'
 
-with open('/Users/Sigfrido/Desktop/secret_key.txt') as f:
-    SECRET_KEY = f.read().strip()
+# with open('/Users/Sigfrido/Desktop/secret_key.txt') as f:
+#     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -127,3 +131,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+django_heroku.settings(locals())
