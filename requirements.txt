@@ -1,4 +1,3 @@
-geodjango
 django-heroku
 Django==2.1.7
 gunicorn==19.9.0
