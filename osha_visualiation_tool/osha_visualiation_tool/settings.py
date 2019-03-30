@@ -21,6 +21,17 @@ import django_heroku
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+
+
+
+
+
+
+from os import environ
+
+GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
+
 # LEARN HOW TO CREATE A ENV FILE
 # for this project just push....
 # fuck webdevelopment has too many layers.... 
