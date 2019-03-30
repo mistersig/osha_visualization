@@ -6,15 +6,17 @@
     background-color: #133762;
     border-color: transparent;
     box-shadow: 0px 1px 7px #888888;
-    z-index: 99999;
+    width: 100%;
+    margin-left: 7.5%;
+
 }
 
-.navbar-brand {
+/*.navbar-brand {
     font-family: Futura, Trebuchet MS, Arial, sans-serif;
     font-size: 24px;
     color: #4D4D4D;
 }
-
+*/
 
 
 
@@ -31,10 +33,35 @@ span {
   }
 
 
-#mapid {
-    height: 88vh;
+
+#homearea {
     width: 100%;
+    height: 100vh;
+    background-image: url(../img/workers.jpg);
+    background-size:cover;
+    background-position: center;
+    font-family: futura, sans-serif;
+    color: #f95c00;
+    text-align: center;
+    font-size: 42px;
+    padding-top: 120px;
+}
+
+#maparea{
+    height: 88vh;
+    width: 85%;
     display: inline-block;
+    margin-left: 7.5%;
+    padding-top: 90px;
+    padding-bottom: 30px;
+    margin-top: auto;
+}
+
+#mapid {
+    height: 80vh;
+    width: 100%;
+    /*display: inline-block;*/
+
     
 }
 
@@ -42,17 +69,38 @@ span {
 #sidebar{
     height: 80vh;
     width: 100%;
-    display: inline-block;
-    vertical-align: top;
+    /*display: inline-block;*/
+/*    vertical-align: top;
     text-align: center;
-    background-color: white;
+    background-color: white;*/
 
 }
 
-
+#chartid {
+    height: 85vh;
+    width: 94%;
+    display: inline-flex;
+/*    margin-left: 3%;
+    margin-top: 80px;
+    margin-bottom: 0px;*/
+}
 .chart-title{
     margin: 2px;
     text-align: center;
+}
+
+
+
+
+#dataarea{
+    height: 88vh;
+    width: 85%;
+    display: inline-block;
+    margin-left: 7.5%;
+    padding-top: 90px;
+    padding-bottom: 30px;
+    margin-top: 10%;
+
 }
 
 #about {
@@ -60,7 +108,7 @@ span {
     width: 85%;
     display: inline-block;
     margin-left: 7.5%;
-    margin-top: 70px;
+    margin-top: 80px;
 }
 
 
@@ -75,6 +123,7 @@ span {
 /* LEGEND PER CHOROPLETH LIBRARY
 modified for my use
 */
+
 .legend {
     color: #555;
     padding: 6px 8px;
@@ -116,8 +165,45 @@ modified for my use
 
 
 
+/*.legend {
+    line-height: 18px;
+    color: black;
+}
+.legend i {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 8px;
+    opacity: 1;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    border-radius: 5px;
+}
 
 
+*/
+
+
+
+/*
+.legend {
+    line-height: 18px;
+    color: black;
+}
+.legend i {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-right: 8px;
+    opacity: 1;
+}
+*/
 
 
 

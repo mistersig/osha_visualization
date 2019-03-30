@@ -23,7 +23,9 @@ L.choropleth = module.exports = function (geojson, opts) {
     function (item) {
       return item.properties[opts.valueProperty]
     })
-  var limits = chroma.limits(values, opts.mode, opts.steps - 1)
+  var limits = chroma.limits(values - 1, opts.mode, opts.steps - 1.0)
+
+  console.log(limits);
 
   // Create color buckets
   var colors = (opts.colors && opts.colors.length === limits.length ?

@@ -13,127 +13,68 @@ function initialization() {
 
 $(document).ready(initialization);
 
-
-////// THE START OF BUILDING THE FUNCTIONALITY OF THE MAP 
-
-
 // get data and build map
 function getData(mymap){
   // baselayer
-  var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  var baselayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
   }).addTo(mymap);
   //basemap
   const baseMaps = {
-    "Basemap": OpenStreetMap_Mapnik
+    "Basemap": baselayer
   }; 
 
 
 // Map layers for SIDEBARS
 
-// //load the l
-// const fatalMaps = {
-//   "Reported Fatalities ": fatalitiesLayer
-// };
+// var severeZipLayer =choroplethMap(severe_zip_data,mymap)
+var severeStateLayer =choroplethMap(severe_state_data,mymap)
 
-// // const severeMaps = {
-// //   "Severe Injuries ": severeInjuryLayer
-// // };
+const severeMaps = {
+  "Severe Injuries by State": severeStateLayer
+  // "Severe Injuries by Zipcode": severeZipLayer
+};
 
-// ORIGINALS SAVE
-// var accidentLayer = choroplethMap(accident_data,mymap);
-// var complaintLayer = choroplethMap(complaint_data,mymap);
-// var fatCatLayer = choroplethMap(fat_cat_data,mymap);
-// var followUpLayer = choroplethMap(follow_up_data,mymap);
-// var monitoringLayer = choroplethMap(monitoring_data,mymap);
-// var varianceLayer = choroplethMap(variance_data,mymap);
-// var referralsLayer = choroplethMap(referrals_data,mymap);
-// var plannedLayer = choroplethMap(planned_data,mymap);
+var fatalitiesStateLayer =choroplethMap(fatalities_states_data,mymap)
+// var fatalitiesZipLayer =choroplethMap(fatalities_zip_data,mymap)
 
-// const inspectionsMaps = {
-//   "Accidents Inspected": accidentLayer,
-//   "Complaints Inspected": complaintLayer,
-//   "Fatalities & Catastrophes Inspected": fatCatLayer,
-//   "Follow Up Inpections ": followUpLayer,
-//   "Monitoring Inspections ": monitoringLayer,
-//   "Variances Inspected ": varianceLayer,
-//   "Referrals Inspected ": referralsLayer,
-//   "Planned Inspections ": plannedLayer
-// };
-
-
-////// FOR TESTING
-var accidentLayer = choroplethMap(accident_data,mymap);
-// var complaintLayer = choroplethMap(complaint_data,mymap);
-var fatCatLayer = choroplethMap(fat_cat_data,mymap);
-var followUpLayer = choroplethMap(follow_up_data,mymap);
-// var monitoringLayer = choroplethMap(monitoring_data,mymap);
-// var varianceLayer = choroplethMap(variance_data,mymap);
-// var referralsLayer = choroplethMap(referrals_data,mymap);
-// var plannedLayer = choroplethMap(planned_data,mymap);
-
-const inspectionsMaps = {
-  "Accidents Inspected": accidentLayer,
-  "Fatalities & Catastrophes Inspected": fatCatLayer,
-  "Follow Up Inpections ": followUpLayer
+const fatalMaps = {
+  "Fatalities by State": fatalitiesStateLayer
+  // "Fatalities by Zipcode": fatalitiesZipLayer
 };
 
 
+// // ORIGINALS SAVE
+var accidentLayer = choroplethMap(accident_data,mymap);
+var complaintLayer = choroplethMap(complaint_data,mymap);
+var fatCatLayer = choroplethMap(fat_cat_data,mymap);
+var followUpLayer = choroplethMap(follow_up_data,mymap);
+var monitoringLayer = choroplethMap(monitoring_data,mymap);
+var varianceLayer = choroplethMap(variance_data,mymap);
+var referralsLayer = choroplethMap(referrals_data,mymap);
+var plannedLayer = choroplethMap(planned_data,mymap);
 
 
-
-
-
-
-
-
-////TESTING!!!!!!!
-// const inspectionsMaps = {
-//   "Accidents Inspected": accidentLayer
-// };
+const inspectionsMaps = {
+  "Accidents Inspected": accidentLayer,
+  "Complaints Inspected": complaintLayer,
+  "Fatalities & Catastrophes Inspected": fatCatLayer,
+  "Follow Up Inpections": followUpLayer,
+  "Monitoring Inspections": monitoringLayer,
+  "Variances Inspected": varianceLayer,
+  "Referrals Inspected": referralsLayer,
+  "Planned Inspections": plannedLayer
+};
 
 //calls function to add layer controls to menu 
-// putControlsInMenu(baseMaps, fatalMaps,'collapseTwo1',mymap);
-// putControlsInMenu(baseMaps, severeMaps, 'collapseTwo21',mymap);
-putControlsInMenu(baseMaps, inspectionsMaps, 'collapseThree31',mymap);
+layerControlMenuFatalities(baseMaps, fatalMaps,'collapseTwo1',mymap);
 
+layerControlMenuInjury(baseMaps, severeMaps, 'collapseTwo21',mymap);
 
+layerControlMenu(baseMaps, inspectionsMaps, 'collapseThree31',mymap);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  function getColor(d) {
-      return d > 70 ? '#800026' :
-             d > 60  ? '#BD0026' :
-             d > 50  ? '#E31A1C' :
-             d > 40  ? '#FC4E2A' :
-             d > 30   ? '#FD8D3C' :
-             d > 20   ? '#FEB24C' :
-             d > 10   ? '#FED976' :
-                        '#FFEDA0';
-  }
-
-  function style(feature) {
-      return {
-          fillColor: getColor(feature.properties.fatalities),
-          weight: 2,
-          opacity: 1,
-          color: 'white',
-          dashArray: '3',
-          fillOpacity: 0.7
-      };
-  }
 
 
 // control that shows state info on hover
@@ -144,27 +85,23 @@ putControlsInMenu(baseMaps, inspectionsMaps, 'collapseThree31',mymap);
     this.update();
     return this._div;
   };
-
   baseHtml = '<p class="hidden-xs"><i class="fa fa-fw fa-mouse-pointer"></i>Select a layer<br/>to see its data</p>';
-
   info.update = function(props) {
     // console.log(props)
     var text = baseHtml;
+    console.log(props)
     if (props) {
       text = '';
       if (props.state_name) {
-        text += '<h4>' + props.score + '</h4>';
+        text += '<h4>' + props.code+ ' : ' + props.score +"%" +'</h4>';
       }
     }
     this._div.innerHTML = text;
   };
-  
   info.clear = function() {
     this._div.innerHTML = baseHtml;
   };
-
   info.addTo(mymap);
-
   // MAP highlight
   function highlightFeature(e) {
       var layer = e.target;
@@ -177,18 +114,17 @@ putControlsInMenu(baseMaps, inspectionsMaps, 'collapseThree31',mymap);
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
       }
+      // console.log(layer.feature)
       info.update(layer.feature.properties);
     }
     // end of highlightFeature
-
-
 
 function resetHighlight(e) {
   var layer = e.target;
 
         layer.setStyle({
-        "weight": 0,
-        "opacity": 0.5,
+        "weight": 2,
+        "opacity": 0.8,
         "color": '#3a3a3a'
         });
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -213,157 +149,181 @@ function onEachFeature(feature, layer) {
 
 
 function choroplethMap(feature,map){
+  // console.log(feature)
 
-  var choroplethLayer = L.choropleth(feature, {
+  console.log(feature.features[0].properties.insp_type)
+
+  if( feature.features[0].properties.insp_type == "accident            "){
+      var choroplethLayer = L.choropleth(feature, {
     valueProperty: 'score',
-    scale: ['white', 'red'],
+    scale: ['#eff3ff', '#08519c'],
     steps: 4,
-    mode: 'k', // q for quantile, e for equidistant, k for k-means
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
     style: {
-      color: '#fff',
+      color: '#000',
       weight: 2,
       fillOpacity: 0.8
     },
     onEachFeature:onEachFeature
   })
 
-  // var legendLayer = legendMap(choroplethLayer,map);   
+
   return choroplethLayer
-  // return [choroplethLayer,legendLayer]
-  // .addTo(map)
+
+  }
+  else if( feature.features[0].properties.insp_type == "complaint            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+  else if( feature.features[0].properties.insp_type == "fatality_catastrophe            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+
+  else if( feature.features[0].properties.insp_type == "follow_up            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+  else if( feature.features[0].properties.insp_type == "monitoring            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+    else if( feature.features[0].properties.insp_type == "variance            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+  else if( feature.features[0].properties.insp_type == "referral            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+  else if( feature.features[0].properties.insp_type == "planned            "){
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['#eff3ff', '#08519c'],
+    steps: 4,
+    mode: 'e', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+
+
+  else {
+      var choroplethLayer = L.choropleth(feature, {
+    valueProperty: 'score',
+    scale: ['white', 'red'],
+    steps: 5,
+    mode: 'q', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#000',
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature:onEachFeature
+  })
+
+
+  return choroplethLayer
+
+  }
+
+
+
 
 }; //end of choropleth
 
-
-
-// function legendMap(choroplethLayer,map){
-//   // Add legend (don't forget to add the CSS from index.html)
-//   var legend = L.control({ position: 'bottomleft' })
-//   legend.onAdd = function (map) {
-//     var div = L.DomUtil.create('div', 'info legend')
-//     var limits = choroplethLayer.options.limits
-//     console.log(limits)
-//     console.log(limits.length)
-//     var colors = choroplethLayer.options.colors
-//     var labels = []
-
-//     // loop to add legending breaks
-//     for (var i = 0; i < limits.length-1; i++) {
-//           div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>' 
-//     };
-//     // add last break outside of loop
-//     div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>'     
-
-//     limits.forEach(function (limit, index) {
-//       labels.push('<li style="background-color: ' + colors[index] + '"></li>')
-//     })
-
-//     div.innerHTML += '<ul>' + labels.join('') + '</ul>'
-//     return div
-//   }
-//   return legend
-//    // legend.addTo(map)
-
-// };
-
-
-
-// function choroplethMap(feature,map){
-//   var choroplethLayer = L.choropleth(feature, {
-//     valueProperty: 'count',
-//     scale: ['white', 'red'],
-//     steps: 7,
-//     mode: 'k', // q for quantile, e for equidistant, k for k-means
-//     style: {
-//       color: '#fff',
-//       weight: 2,
-//       fillOpacity: 0.8
-//     },
-//     onEachFeature:onEachFeature
-//   })
-
-
-//   // return [choroplethLayer,legendLayer]
-//   // .addTo(map)
-
-
-
-
-
-
-//   // Add legend (don't forget to add the CSS from index.html)
-//   var legend = L.control({ position: 'bottomleft' })
-//   legend.onAdd = function (map) {
-//     var div = L.DomUtil.create('div', 'info legend')
-//     var limits = choroplethLayer.options.limits
-//     console.log(limits)
-//     console.log(limits.length)
-//     var colors = choroplethLayer.options.colors
-//     var labels = []
-
-//     // loop to add legending breaks
-//     for (var i = 0; i < limits.length-1; i++) {
-//           div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>' 
-//     };
-//     // add last break outside of loop
-//     div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>'     
-
-//     limits.forEach(function (limit, index) {
-//       labels.push('<li style="background-color: ' + colors[index] + '"></li>')
-//     })
-
-//     div.innerHTML += '<ul>' + labels.join('') + '</ul>'
-//     return div
-//   }
-   
-//    // legend.addTo(map)
-
-// };
-
-
-
-
-
-//// //new way to do chropleth maps
-  // var choroplethLayer = L.choropleth(accident_data, {
-  //   valueProperty: 'count',
-  //   scale: ['white', 'red'],
-  //   steps: 7,
-  //   mode: 'k', // q for quantile, e for equidistant, k for k-means
-  //   style: {
-  //     color: '#fff',
-  //     weight: 2,
-  //     fillOpacity: 0.8
-  //   },
-  //   onEachFeature: onEachFeature
-  // })
-  // // .addTo(mymap)
-
-  // // Add legend (don't forget to add the CSS from index.html)
-  // var legend = L.control({ position: 'bottomleft' })
-  // legend.onAdd = function (map) {
-  //   var div = L.DomUtil.create('div', 'info legend')
-  //   var limits = choroplethLayer.options.limits
-  //   console.log(limits)
-  //   console.log(limits.length)
-  //   var colors = choroplethLayer.options.colors
-  //   var labels = []
-
-  //   // loop to add legending breaks
-  //   for (var i = 0; i < limits.length-1; i++) {
-  //         div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>' 
-  //   };
-  //   // add last break outside of loop
-  //   div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>'     
-
-  //   limits.forEach(function (limit, index) {
-  //     labels.push('<li style="background-color: ' + colors[index] + '"></li>')
-  //   })
-
-  //   div.innerHTML += '<ul>' + labels.join('') + '</ul>'
-  //   return div
-  // }
-  // // legend.addTo(mymap)
 
 
 }; // end of getData
@@ -376,9 +336,8 @@ function choroplethMap(feature,map){
 ////Puts the control in the sidebar and out of Leaflet
 
 // https://stackoverflow.com/questions/42908826/leaflet-removing-updating-a-legend
-function putControlsInMenu(baseMaps, map_data,menu,map){
-  console.log('Grouped layers');
-  console.log(map_data);
+function layerControlMenu(baseMaps, map_data,menu,map){
+  // console.log(map_data);
   var layerControl = L.control.layers(null, map_data,{
     collapsed: false
   });
@@ -386,277 +345,267 @@ function putControlsInMenu(baseMaps, map_data,menu,map){
   layerControl._container.remove();
   document.getElementById(menu).appendChild(layerControl.onAdd(map));
 
-  //   var legend = L.control({ position: 'bottomleft' })
-  // legend.onAdd = function (map) {
-  //   var div = L.DomUtil.create('div', 'info legend')
-  //   var limits = choroplethLayer.options.limits
-  //   // console.log(limits)
-  //   // console.log(limits.length)
-  //   var colors = choroplethLayer.options.colors
-  //   var labels = []
 
-  //   // loop to add legending breaks
-  //   for (var i = 0; i < limits.length-1; i++) {
-  //         div.innerHTML += '<li><div class="labels">' + limits[i]  + '</div></li>' 
-  //   };
-  //   // add last break outside of loop
-  //   div.innerHTML += '<li><div class="labels">' + limits[i]  + '</div></li>'     
+  map.on('overlayadd', function (eventLayer) {
+    console.log(eventLayer.name);
+    // //Switch to the Permafrost legend...
+    if (eventLayer.name === 'Accidents Inspected') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
 
-  //   limits.forEach(function (limit, index) {
-  //     labels.push('<li style="background-color: ' + colors[index] + '"></li>')
-  //   })
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Accidents Inspected'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+    } 
+    else if (eventLayer.name === 'Fatalities & Catastrophes Inspected') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
 
-  //   div.innerHTML += '<ul>' + labels.join('') + '</ul>'
-  //   return div
-  // }
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Fatalities & Catastrophes Inspected'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     } 
+
+    else if (eventLayer.name === 'Complaints Inspected') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Complaints Inspected'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     } 
+    else if (eventLayer.name === 'Follow Up Inpections') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Follow Up Inpections'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     }      
+    else if (eventLayer.name === 'Monitoring Inspections') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Monitoring Inspections'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     } 
+    else if (eventLayer.name === 'Variances Inspected') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Variances Inspected'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     } 
+    else if (eventLayer.name === 'Referrals Inspected') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Referrals Inspected'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     } 
+    else if (eventLayer.name === 'Planned Inspections') {
+      var layerLegend = legendMap(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Planned Inspections'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     } 
+
+});
+
+
+}; //end of layerControlMenu
+
+function layerControlMenuFatalities(baseMaps, map_data,menu,map){
+  // console.log(map_data);
+  var layerControl = L.control.layers(null, map_data,{
+    collapsed: false
+  });
+  layerControl.addTo(map);
+  layerControl._container.remove();
+  document.getElementById(menu).appendChild(layerControl.onAdd(map));
+
+
 
 
   map.on('overlayadd', function (eventLayer) {
-    // console.log(eventLayer);
     console.log(eventLayer.name);
-    
     // //Switch to the Permafrost legend...
-    if (eventLayer.name === 'Accidents Inspected') {
-      console.log(eventLayer);
-      console.log(eventLayer.layer)
-          var layerLegend = legendMap(eventLayer.layer,map); 
-          layerLegend.addTo(map);
-
-          // this.removeControl(layerLegend);
-          // layerLegend.addTo(this);
-
+    if (eventLayer.name === 'Fatalities by State') {
       
+      var layerLegend = legendMapFatalities(eventLayer.layer,map); 
+      layerLegend.addTo(map);
 
-        // map.removeControl(legend1);
-        // legend2.addTo(map);
-        map.on('overlayremove', function(eventLayer){
-    if (eventLayer.name === 'Accidents Inspected'){
-      // var layerLegend = legendMap(eventLayer.layer,map); 
-         map.removeControl(layerLegend);
-    } 
-});
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Fatalities by State'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
      } 
-     else if (eventLayer.name === 'Fatalities & Catastrophes Inspected') {
-      console.log(eventLayer);
-      console.log(eventLayer.layer)
-          var layerLegend = legendMap(eventLayer.layer,map); 
-          layerLegend.addTo(map);
 
-      
 
-        // map.removeControl(legend1);
-        // legend2.addTo(map);
-     } 
-     else if (eventLayer.name === 'Fatalities & Catastrophes Inspected') {
-      console.log(eventLayer);
-      console.log(eventLayer.layer)
-          var layerLegend = legendMap(eventLayer.layer,map); 
-          layerLegend.addTo(map);
-
-      
-
-        // map.removeControl(legend1);
-        // legend2.addTo(map);
-     } 
-     else { // Or switch to the treeline legend...
-        map.removeControl(layerLegend);
-        // legend1.addTo(map);
-    }
 });
 
-// map.on('overlayremove', function(eventLayer){
-//     if (eventLayer.name === 'Accidents Inspected'){
-//       // var layerLegend = legendMap(eventLayer.layer,map); 
-//          map.removeControl();
-//     } 
-// });
+
+}; //end of layerControlMenu
 
 
-// I NEED TO MOVE UP THE LEGEND TO MY LOCAL function 
+function layerControlMenuInjury(baseMaps, map_data,menu,map){
+  // console.log(map_data);
+  var layerControl = L.control.layers(null, map_data,{
+    collapsed: false
+  });
+  layerControl.addTo(map);
+  layerControl._container.remove();
+  document.getElementById(menu).appendChild(layerControl.onAdd(map));
 
 
+  map.on('overlayadd', function (eventLayer) {
+    console.log(eventLayer.name);
+    // //Switch to the Permafrost legend...
+    if (eventLayer.name === 'Severe Injuries by State') {
+      var layerLegend = legendMapInjuries(eventLayer.layer,map); 
+      layerLegend.addTo(map);
+
+      map.on('overlayremove', function(eventLayer){
+        if (eventLayer.name === 'Severe Injuries by State'){
+          map.removeControl(layerLegend);
+        } 
+      }); //layer removal
+     }      
 
 
+});
 
 
-//https://gis.stackexchange.com/questions/188330/leafletjs-how-to-hide-legend-when-layer-is-clicked
-//https://gis.stackexchange.com/questions/92257/leaflet-add-and-remove-legends-with-layer-selection
-//leaflet overlayadd remove when clear
-
-
-
-// map.on('overlayremove', function(eventLayer){
-//     if (eventLayer.name === 'District Population'){
-//          map.removeControl(popuLegend);
-//     } 
-// };
-
-// Follow Up Inpections
-  // document.getElementById("myBtn").addEventListener("click", function(){
-  //   document.getElementById("demo").innerHTML = "Hello World";
-  // });
-  // console.log(layerControl);
-  // // adding legend to 
-  // var key = Object.values(map_data);
-  // console.log('Getting the keys');
-  // console.log(key);
-
-
-// for (var key in map_data){
-//   console.log('Getting the keys in FOR Loop');
-//     console.log(map_data[key])///
-//     var layerLegend = legendMap(map_data[key],map); 
-//   layerLegend.addTo(map);
-//   };
-
-  // var legend = L.control({ position: 'bottomleft' })
-  // legend.onAdd = function () {
-  //   var div = L.DomUtil.create('div', 'info legend')
-  //   var limits = layerControl.options.limits
-  //   console.log(limits)
-  //   // console.log(limits)
-  //   // console.log(limits.length)
-  //   var colors = layerControl.options.colors
-  //   var labels = []
-
-  //   // loop to add legending breaks
-  //   for (var i = 0; i < limits.length-1; i++) {
-  //         div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>' 
-  //   };
-  //   // add last break outside of loop
-  //   div.innerHTML += '<li><div class="labels">' + limits[i].toFixed(0)  + '</div></li>'     
-
-  //   limits.forEach(function (limit, index) {
-  //     labels.push('<li style="background-color: ' + colors[index] + '"></li>')
-  //   })
-
-  //   div.innerHTML += '<ul>' + labels.join('') + '</ul>'
-  //   return div
-  // }
-  // // return legend
-  //  legend.addTo(map)
-
-
-
-  // 
-  // return layerControl;
-  // console.log(layerControl)
-
-};
+}; //end of layerControlMenu
 
 
 
 
 
-
-// function legendMap(choroplethLayer,map){
-//   // Add legend (don't forget to add the CSS from index.html)
-
-
-// };
-// ///////// MENU IN SIDE BAR /////////
-// // Puts the control in the sidebar and out of Leaflet
-// function putControlsInMenu(baseMaps, map_data, menu,map){
-//   for (var i in map_data){
-//     return i 
-//   }
-//   // console.log(map_data.values())
-//   var layer_data = map_data[i];
-//   var legend_data = map_data[1];
-//   // console.log(typeof map_data);
-//   // console.log(Object.getOwnPropertyNames(map_data));
-//   var layerControl = L.control.layers(null, map_data[i],{
-//     collapsed: false
-//   });
-//   layerControl.addTo(map);
-//   // map_data[1].addTo(map);
-//   layerControl._container.remove();
-//   document.getElementById(menu).appendChild(layerControl.onAdd(map));
-//   // var la
-//   // console.log(Object.values(map_data))
-//   // console.log(map_data[menu])
-//   // console.log(map_data.options)
-//   for (var key in map_data){
-
-//     console.log(map_data[key])///
-//     var layerLegend = legendMap(map_data[key],map); 
-//   layerLegend.addTo(map);
-//   };
-//   console.log(menu)
-  
-// };
-
-
-
-
-function popUpBubbles(feature,latlng,map){
-    var geojsonMarkerOptions = {
-      radius: 10,
-      fillColor: "#330066",
-      color: "#000", //purple
-      weight: 1,
-      opacity: 1,
-      fillOpacity: .5
-    };
-    var popUpContent = "<p><b>Employer: <b>" + feature.properties["employer"] + "</p>";
-        popUpContent += "<p><b>" + "City: " + feature.properties["city"]  + "</p>";
-        popUpContent += "<p><b>" + "Date of Incident: " + feature.properties["event_date"]  + "</p>";
-        popUpContent += "<p><b>" + "Industry: " + feature.properties["industry"]  + "</p>";
-        popUpContent += "<p><b>" + "Description: " + feature.properties["final_description"]  + "</p>";
-
-    manipluateLayer = L.circleMarker(latlng,geojsonMarkerOptions);
-    var markers = L.markerClusterGroup();
-
-    // manipluateLayer
-    manipluateLayer.bindPopup(popUpContent,{offset: new L.point(0,0), maxWidth: 560});
-    manipluateLayer.on({
-      mouseover: function(){
-        this.openPopup();
-      },
-      mouseout: function(){
-        this.closePopup();
-      },
-      click: function(){
-        manipluateLayer.on(popUpContent);
-      }
-    });
-    // return manipluateLayer;
-    // return markers.addLayer(manipluateLayer).addTo(map);
-    // needs help
-    // return map.addLayer(manipluateLayer);
-    return markers.addLayer(manipluateLayer);
-
-    // map.addLayer(manipluateLayer)
-    
-
-};
 
 function legendMap(choroplethLayer,map){
+  console.log(choroplethLayer)
+
+
   // Add legend (don't forget to add the CSS from index.html)
   var legend = L.control({ position: 'bottomleft' })
   legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend')
     var limits = choroplethLayer.options.limits
-    // console.log(limits)
-    // console.log(limits.length)
     var colors = choroplethLayer.options.colors
     var labels = []
+    console.log(limits);
 
-    // loop to add legending breaks
-    for (var i = 0; i < limits.length-1; i++) {
-          div.innerHTML += '<li><div class="labels">' + limits[i]  + '</div></li>' 
-    };
-    // add last break outside of loop
-    div.innerHTML += '<li><div class="labels">' + limits[i]  + '</div></li>'     
 
-    limits.forEach(function (limit, index) {
-      labels.push('<li style="background-color: ' + colors[index] + '"></li>')
-    })
 
-    div.innerHTML += '<ul>' + labels.join('') + '</ul>'
+div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Inspections</h3><br></div><div class="labels"><div class="min">Low</div> \
+  <div class="max">High</div></div>'
+
+labels.push('<li style="background-color: ' + colors[0] + '"></li>')
+for (i = 1; i < colors.length; i++) {
+      labels.push('<li style="background-color: ' + colors[i] + '"></li>')
+    }
+
+    div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
     return div
+
+
   }
   return legend
    // legend.addTo(map)
 
 };
+
+
+
+
+
+
+function legendMapFatalities(choroplethLayer,map){
+  console.log(choroplethLayer)
+
+
+  // Add legend (don't forget to add the CSS from index.html)
+  var legend = L.control({ position: 'bottomleft' })
+  legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend')
+    var limits = choroplethLayer.options.limits
+    var colors = choroplethLayer.options.colors
+    var labels = []
+    console.log(limits);
+
+
+
+div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Fatalities</h3><br></div><div class="labels"><div class="min">Low</div> \
+  <div class="max">High</div></div>'
+
+labels.push('<li style="background-color: ' + colors[0] + '"></li>')
+for (i = 1; i < colors.length; i++) {
+      labels.push('<li style="background-color: ' + colors[i] + '"></li>')
+    }
+
+    div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
+    return div
+
+
+  }
+  return legend
+   // legend.addTo(map)
+
+};
+
+function legendMapInjuries(choroplethLayer,map){
+  console.log(choroplethLayer)
+
+
+  // Add legend (don't forget to add the CSS from index.html)
+  var legend = L.control({ position: 'bottomleft' })
+  legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend')
+    var limits = choroplethLayer.options.limits
+    var colors = choroplethLayer.options.colors
+    var labels = []
+    console.log(limits);
+
+
+
+div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Severe Injuries</h3><br></div><div class="labels"><div class="min">Low</div> \
+  <div class="max">High</div></div>'
+
+labels.push('<li style="background-color: ' + colors[0] + '"></li>')
+for (i = 1; i < colors.length; i++) {
+      labels.push('<li style="background-color: ' + colors[i] + '"></li>')
+    }
+
+    div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
+    return div
+
+
+  }
+  return legend
+   // legend.addTo(map)
+
+};
+
