@@ -1,8 +1,7 @@
 django
 gunicorn
 django-heroku
-GDAL == 2.3.0
-
+osgeo
 
 
 
