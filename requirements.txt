@@ -1,5 +1,6 @@
 django-heroku
-Django==2.1.7
+Python ==3.7.0
+Django -> 2.1
 gunicorn==19.9.0
 MarkupSafe==1.1.0
 matplotlib==3.0.2
