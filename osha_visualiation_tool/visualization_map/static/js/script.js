@@ -1,11 +1,7 @@
 // global variable never change use const
-
-
 // initial function that starts the map and displays it 
 function initialization() {
   const mymap = L.map('mapid').setView([38.700860, -94.783775], 4); //38.724066, -99.262098 //
-  // get model data from script in index
-  // the Django way
   getData(mymap);
 
 }; //end of initialization
@@ -47,6 +43,8 @@ const fatalMaps = {
 
 
 // // ORIGINALS SAVE
+// get model data from script in index
+// the Django way
 var accidentLayer = choroplethMap(accident_data,mymap);
 var complaintLayer = choroplethMap(complaint_data,mymap);
 var fatCatLayer = choroplethMap(fat_cat_data,mymap);
@@ -318,10 +316,6 @@ function choroplethMap(feature,map){
   return choroplethLayer
 
   }
-
-
-
-
 }; //end of choropleth
 
 
@@ -462,8 +456,6 @@ function layerControlMenuFatalities(baseMaps, map_data,menu,map){
         } 
       }); //layer removal
      } 
-
-
 });
 
 
