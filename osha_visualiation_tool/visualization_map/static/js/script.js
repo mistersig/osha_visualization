@@ -316,6 +316,11 @@ function choroplethMap(feature,map){
   return choroplethLayer
 
   }
+
+
+
+
+  
 }; //end of choropleth
 
 
